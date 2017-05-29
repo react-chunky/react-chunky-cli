@@ -1,0 +1,33 @@
+name: chunky
+commands:
+  - name: update
+    description: update your Chunky CLI
+    executor: src/commands/update
+  - name: status
+    description: checks the current context status
+    executor: src/commands/status
+  - name: new:app
+    description: create a new React app
+    executor: src/commands/newApp
+    options:
+    - name: name
+      description: the application name
+      type: string
+    - name: web
+      description: create a web app
+      type: boolean
+    - name: mobile
+      description: create a mobile app
+      type: boolean
+    - name: template
+      description: start from a template
+      type: string
+  # - name: ios
+  #   description: start the iOS app
+  #   executor: src/commands/ios
+  # - name: android
+  #   description: start the Android app
+  #   executor: src/commands/android
+  # - name: api
+  #   description: start the local API
+  #   executor: src/commands/api

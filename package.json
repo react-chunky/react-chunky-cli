@@ -1,0 +1,27 @@
+{
+  "name": "react-chunky-cli",
+  "version": "0.2.2",
+  "description": "The React Chunky Command-Line Tool",
+  "preferGlobal": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/react-chunky/react-chunky-cli.git"
+  },
+  "bin": {
+    "chunky": "bin/cli.js"
+  },
+  "author": "I. Dan Calinescu <idancalinescu@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/react-chunky/react-chunky-cli/issues"
+  },
+  "homepage": "https://github.com/react-chunky/react-chunky-cli",
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "cpy": "^4.0.1",
+    "ejs": "^2.5.2",
+    "recursive-readdir": "^2.1.0",
+    "slana": "^0.2.1",
+    "lali": "0.x"
+  }
+}
