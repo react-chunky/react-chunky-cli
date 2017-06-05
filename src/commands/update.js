@@ -1,7 +1,7 @@
 const coreutils = require('coreutils')
 
 function parseCommand(command) {
-    logger.info("⇨ Updating Chunky")
+    coreutils.logger.info("Updating Chunky")
     coreutils.run.npm(["i", "-gf", "react-chunky-cli"])
 }
 
