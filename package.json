@@ -1,6 +1,6 @@
 {
   "name": "react-chunky-cli",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "The React Chunky Command-Line Tool",
   "preferGlobal": true,
   "repository": {
@@ -19,9 +19,10 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "cpy": "^4.0.1",
-    "ejs": "^2.5.2",
-    "recursive-readdir": "^2.1.0",
+    "ejs": "^2.5.6",
+    "lali": "0.x",
+    "recursive-readdir": "^2.2.1",
     "slana": "^0.2.1",
-    "lali": "0.x"
+    "url-parse": "^1.1.9"
   }
 }

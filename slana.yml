@@ -4,11 +4,21 @@ commands:
     description: update your Chunky CLI
     executor: src/commands/update
   - name: new:app
-    description: create a new React app
+    description: create a new Chunky app
     executor: src/commands/newApp
     options:
     - name: name
       description: the application name
+      type: string
+    - name: template
+      description: start from a template
+      type: string
+  - name: new:chunk
+    description: create a new chunk
+    executor: src/commands/newChunk
+    options:
+    - name: name
+      description: the chunk name
       type: string
     - name: template
       description: start from a template

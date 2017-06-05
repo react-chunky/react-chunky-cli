@@ -1,5 +1,3 @@
-const logger = require("../core/logger")
-const runner = require("../core/runner")
 const lali = require('lali')
 const coreutils = require('coreutils')
 const path = require('path')
@@ -30,19 +28,20 @@ function configureApp(name, dir) {
 function installTemplateIfItExists(name, template, dir) {
     return template.sourceExists().then(() => {
         // Looks like we found the theme, so let's go ahead and install it
-        logger.done(`↳ Found template.`)
-        logger.info("⇨ [2/3] Downloading template")
+        coreutils.logger.ok(`↳ Found template.`)
+        coreutils.logger.info("[2/4] Downloading template")
         return template.download(dir)
     }).then(() => {
-        logger.done(`↳ Download complete.`)
-        logger.info("⇨ [3/3] Configuring your new Chunky app")
+        coreutils.logger.ok(`↳ Download complete.`)
+        coreutils.logger.info("[3/4] Configuring your new Chunky app")
         return configureApp(name, dir)
     }).then(() => {
-        logger.done(`↳ Successfully configured.`)
-        logger.banner("Congratulations, you've got yourself a brand new Chunky app!")
+        coreutils.logger.ok(`↳ Successfully configured.`)
+        coreutils.logger.info("[4/4] Installing dependencies (this might take a while)")
+        coreutils.run.npmInstall(dir)
     }).catch(error => {
         // The template does not exist so we're stopping right away
-        logger.error(new Error('The template could not be installed'))
+        coreutils.logger.error(new Error('The template could not be installed'))
     })
 }
 
@@ -52,14 +51,14 @@ function createApp(name, template) {
         throw new Error('The app name cannot contain spaces')
     }
 
-    logger.info("⇨ [1/3] Creating a new Chunky app", name)
+    coreutils.logger.info("[1/4] Creating a new Chunky app", name)
 
     if (!template) {
         // We're going to use the default template because no theme was specified
-        logger.info(`↳ Using template:`, 'default')
+        coreutils.logger.ok(`↳ Using default template`)
     } else {
         // This is going to be app created from a specified template
-        logger.info(`↳ Using template:`, template)
+        coreutils.logger.ok(`↳ Using template: ${template}`)
     }
 
     // Build the app template
@@ -91,6 +90,6 @@ module.exports = function(command) {
     try {
         parseCommand(command)
     } catch (error) {
-        logger.error(error)
+        coreutils.logger.error(error)
     }
 }

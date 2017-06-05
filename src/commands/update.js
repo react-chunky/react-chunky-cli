@@ -1,4 +1,3 @@
-const logger = require("../core/logger")
 const coreutils = require('coreutils')
 
 function parseCommand(command) {
@@ -10,6 +9,6 @@ module.exports = function(command) {
     try {
         parseCommand(command)
     } catch (error) {
-        logger.error(error)
+        coreutils.logger.error(error)
     }
 }
