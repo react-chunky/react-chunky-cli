@@ -1,6 +1,13 @@
 import parent from '<%= template %>'
-import local from './chunk.json'
-import * as screens from './src/screens'
+import spec from './chunk.json'
+import * as screens from './screens'
+import * as assets from './assets'
 import { extendChunk } from 'react-chunky'
 
-export default extendChunk(parent, { screens, ...local})
+const chunk = {
+    screens, 
+    assets, 
+    ...spec
+}
+
+export default extendChunk(parent, chunk)
