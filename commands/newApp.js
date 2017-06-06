@@ -62,7 +62,8 @@ function createApp(name, template) {
     }
 
     // Build the app template
-    const appTemplate = new lali.Template(template || "react-chunky/react-chunky-starter-mobile-template")
+    var templatePath = template || "react-chunky/react-chunky-conference-template"
+    const appTemplate = new lali.Template(`${templatePath}@latest`)
     const dir = path.resolve(process.cwd(), name)
 
     // Always create it in a fresh location    

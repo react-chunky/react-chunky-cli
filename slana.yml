@@ -2,10 +2,10 @@ name: chunky
 commands:
   - name: update
     description: update your Chunky CLI
-    executor: src/commands/update
+    executor: commands/update
   - name: new:app
-    description: create a new Chunky app
-    executor: src/commands/newApp
+    description: create a new app
+    executor: commands/newApp
     options:
     - name: name
       description: the application name
@@ -15,7 +15,7 @@ commands:
       type: string
   - name: new:chunk
     description: create a new chunk
-    executor: src/commands/newChunk
+    executor: commands/newChunk
     options:
     - name: name
       description: the chunk name
@@ -25,13 +25,13 @@ commands:
       type: string
   - name: run:packager
     description: start the React Native packager
-    executor: src/commands/runPackager
+    executor: commands/runPackager
   - name: run:ios
     description: install the app on an iOS instance
-    executor: src/commands/runiOS
+    executor: commands/runiOS
   - name: run:android
     description: install the app an Android instance
-    executor: src/commands/runAndroid
+    executor: commands/runAndroid
   - name: status
     description: checks the current context status
-    executor: src/commands/status
+    executor: commands/status

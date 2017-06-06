@@ -7,7 +7,7 @@ const cpy = require("cpy")
 const recursive = require("recursive-readdir")
 
 const config = {
-    templatesDir: path.resolve(__dirname, '../../assets', 'templates'),
+    templatesDir: path.resolve(__dirname, '../assets', 'templates'),
     templatesIgnores: ['.DS_Store', '*.jar', '*.zip', '*.png', '*.jpg', '*.jpeg', '*.gif'],
     assetsTypes: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.zip', '**/*.jar', '!.DS_Store']
 }
@@ -28,40 +28,42 @@ function processTemplateFile(file, options) {
     coreutils.logger.ok(`↳ Added ${options.relativeFile}`)
 }
 
-function installTemplateIfItExists(name, template, targetDir) {
+function createChunkStructure(name, targetDir, template) {
     if (!fs.existsSync(config.templatesDir)) {
         // This should not happen, but better safe than sorry
         throw new Error('Missing expected template assets')
     }
 
     // Start off with a simple context for each template
-    const context = { name, template: path.basename(template.name) }
+    const context = { name, template }
 
     // This is the default location where we want to look for our files
     const templateDir = path.resolve(config.templatesDir, 'chunk')
 
     // First, we want to copy binary assets over to the target
-    cpy(config.assetsTypes, targetDir, {
-        cwd: templateDir,
-        parents: true
-    }).then(() => {
-        // Next, we want to process all the templates
-        recursive(templateDir, config.templatesIgnores, function(err, files) {
-            files.map(function(file) {
-                // Process each file in the template and copy it if necessary
-                const relativeFile = file.substring(templateDir.length + 1)
-                processTemplateFile(file, {
-                    dir: path.resolve(name),
-                    name,
-                    targetFile: path.join(targetDir, relativeFile),
-                    relativeFile,
-                    context
+    return new Promise((resolve, reject) => {
+        cpy(config.assetsTypes, targetDir, {
+            cwd: templateDir,
+            parents: true
+        }).then(() => {
+            // Next, we want to process all the templates
+            recursive(templateDir, config.templatesIgnores, function(err, files) {
+                files.map(function(file) {
+                    // Process each file in the template and copy it if necessary
+                    const relativeFile = file.substring(templateDir.length + 1)
+                    processTemplateFile(file, {
+                        dir: path.resolve(name),
+                        name,
+                        targetFile: path.join(targetDir, relativeFile),
+                        relativeFile,
+                        context
+                    })
                 })
-            })
 
-            // We should be ready to add dependencies now
-            coreutils.logger.info("[2/2] Installing dependencies")
-            coreutils.run.npm(['install', '--save', template.name])
+                // We're all finished with creating the chunk
+                coreutils.logger.done()
+                resolve()
+            })
         })
     })
 }
@@ -82,22 +84,21 @@ function createChunk(name, template) {
 
     // Create the empty chunk destination
     fs.mkdirsSync(dir)
-
-    coreutils.logger.info("[1/2] Creating a new Chunky chunk", name)
-
-    if (!template) {
-        // We're going to use the default template because no template was specified
-        coreutils.logger.ok(`↳ Using template:`, 'default')
-    } else {
-        // This is going to be a chunk created from a specified template
-        coreutils.logger.ok(`↳ Using template:`, template)
+    
+    var prereq = Promise.resolve()    
+    if (template) {
+        coreutils.logger.info(`Installing dependency: ${template}`)
+        prereq = coreutils.run.npm(['install', '--save', template])
     }
 
-    // Build the chunk template
-    const chunkTemplate = new lali.Template(template || "react-chunky-list-chunk")
-
-    // // Let's attempt to look up the template and install if it we find it
-    return installTemplateIfItExists(name, chunkTemplate, dir)
+    prereq.
+    then(() => {
+        coreutils.logger.info("Creating a new chunk", name)
+        return createChunkStructure(name, dir, template)
+    }).
+    then(() => {
+        coreutils.logger.info(`Congratulations on your new chunk!`)
+    })
 }
 
 
