@@ -2,6 +2,7 @@ const lali = require('lali')
 const coreutils = require('coreutils')
 const path = require('path')
 const fs = require('fs-extra')
+const merge = require('deepmerge')
 
 function overrideJSONFile(dir, filename, content) {
     // This is the file we want to generate
@@ -9,18 +10,19 @@ function overrideJSONFile(dir, filename, content) {
     var fileContent = {}
 
     if (fs.existsSync(file)) {
-        fileContent = JSON.parse(fs.readFileSync(file, 'utf8'))
+        fileContent = fs.readFileSync(file, 'utf8')
+        fileContent = JSON.parse(fileContent)
     }
 
+    fileContent = merge.all([fileContent, content])
+
     // Dump the friendly JSON to the file
-    fs.writeFileSync(file, JSON.stringify(Object.assign({}, fileContent, content), null, 2), "utf8")    
+    fs.writeFileSync(file, JSON.stringify(fileContent, null, 2), "utf8")    
 }
 
 function configureApp(name, dir) {
     return new Promise((resolve, reject) => {
-        coreutils.file.jsonMerge(path.resolve(dir, 'package.json'), {
-            name
-        })
+        // overrideJSONFile(dir, 'package', { name })
         resolve()
     })
 }
@@ -40,6 +42,7 @@ function installTemplateIfItExists(name, template, dir) {
         coreutils.logger.info("[4/4] Installing dependencies (this might take a while)")
         coreutils.run.npmInstall(dir)
     }).catch(error => {
+        console.log(error)
         // The template does not exist so we're stopping right away
         coreutils.logger.error(new Error('The template could not be installed'))
     })
