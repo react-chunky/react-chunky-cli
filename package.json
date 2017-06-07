@@ -1,6 +1,6 @@
 {
   "name": "react-chunky-cli",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "The React Chunky Command-Line Tool",
   "preferGlobal": true,
   "repository": {
