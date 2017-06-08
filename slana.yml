@@ -31,11 +31,15 @@ commands:
     executor: commands/runiOS
     options:
     - name: release
-      description: build the ios release build
+      description: build the iOS release build
       type: boolean
   - name: android
     description: run the app on Android
     executor: commands/runAndroid
+    options:
+    - name: release
+      description: build the Android release build
+      type: boolean
   - name: status
     description: checks the current context status
     executor: commands/status
