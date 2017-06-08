@@ -9,7 +9,9 @@ function parseCommand(command) {
             '--dev', 'false', 
             '--entry-file', 'node_modules/react-native-chunky/app/index.android.js', 
             '--assets-dest', 'android/app/src/main/res/',
-            '--bundle-output', 'android/app/src/main/assets/index.android.bundle'])
+            '--bundle-output', 'android/app/src/main/assets/index.android.bundle',
+            '&&', 'cd', 'android', 
+            '&&', './gradlew', 'assembleRelease'])
         return
     }
     
