@@ -43,3 +43,16 @@ commands:
   - name: status
     description: checks the current context status
     executor: commands/status
+  - name: firebaseline
+    description: executes a FirebaseLine
+    executor: commands/firebaseline
+    options:
+    - name: profile
+      description: the Firebase profile to use 
+      type: string
+    - name: groups
+      description: build only these (comma-separated) groups
+      type: string
+    - name: adminPass
+      description: the admin password
+      type: string
