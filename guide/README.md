@@ -10,7 +10,7 @@ In order to be able to install the Chunky CLI, please make sure you have Node.js
 
 [Download Node.js](https://nodejs.org/en/)
 
-Once you have Node.js installed, you can simply install the Chunky CLI as follows:
+Once you have Node.js installed, you can simply install the Chunky CLI as a global module, like so:
 
 ```
 npm -ig react-chunky-cli
@@ -21,6 +21,10 @@ You should now have access to the Chunky CLI in your terminal. To check that you
 ```
 $ chunky
 ```
+
+*If you need help installing the Chunky CLI, no worries, please open up an issue and we'll get you up and running as fast as possible.*
+
+[Please help me install this thing](https://github.com/react-chunky/react-chunky-cli/issues/new?title=Please%20help%20me%20install%20this%20thing)
 
 # Commands Overview
 
