@@ -1,5 +1,5 @@
 <p align="center">
- <h1 align="center"> The Chunky CLI User Guide</13>
+ <h1 align="center"> The Chunky CLI User Guide</h1>
     <p align="center">
         <a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
     </p>
@@ -11,20 +11,17 @@
   </a>
 
   <h3 align="center"> The Full Stack Product Development Platform (for mere mortals) </h3>
+  <h4 align="center"> Chunky helps aspiring and seasoned developers quickly develop an idea into a scalable full stack product </h4>
+
   <p align="center">
     <a href="https://github.com/react-chunky/react-chunky"> <img src="https://img.shields.io/badge/react--chunky-core-blue.svg"> </a>
+    <a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
     <a href="https://www.npmjs.com/package/react-chunky"> <img src="https://img.shields.io/npm/v/react-chunky.svg"> </a>
-    <a href="https://travis-ci.org/react-chunky/react-chunky"> <img src="https://travis-ci.org/react-chunky/react-chunky.svg?branch=master"> </a>
-    <a href="https://codeclimate.com/github/react-chunky/react-chunky"> <img src="https://codeclimate.com/github/react-chunky/react-chunky/badges/coverage.svg"> </a>
-    <a href="https://codeclimate.com/github/react-chunky/react-chunky"> <img src="https://codeclimate.com/github/react-chunky/react-chunky/badges/gpa.svg"> </a>
+    <a href="https://www.npmjs.com/package/react-native-chunky"> <img src="https://img.shields.io/npm/v/react-native-chunky.svg"> </a>
+    <a href="https://www.npmjs.com/package/react-dom-chunky"> <img src="https://img.shields.io/npm/v/react-dom-chunky.svg"> </a>
  </p>
 
- <h4>
-Chunky helps aspiring and seasoned developers quickly develop an idea into a scalable full stack product.
-
- </h4>
 </p>
-
 
 # Welcome
 
