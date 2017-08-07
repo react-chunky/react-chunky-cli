@@ -14,8 +14,8 @@
   <h4 align="center"> Chunky helps aspiring and seasoned developers quickly develop an idea into a scalable full stack product </h4>
 
   <p align="center">
-    <a href="https://github.com/react-chunky/react-chunky"> <img src="https://img.shields.io/badge/react--chunky-core--framework-blue.svg"> </a>
-    <a href="https://github.com/react-chunky/react-native-chunky"> <img src="https://img.shields.io/badge/react--chunky-mobile--framework-blue.svg"> </a>
+    <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/The%20Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
+    <a href="https://github.com/react-chunky/react-native-chunky"> <img src="https://img.shields.io/badge/The%20Chunky%20Mobile%20Framework-react--native--chunky-brightgreen.svg"> </a>
  </p>
 
 </p>
