@@ -5,10 +5,10 @@
     <img width="256" src="https://raw.githubusercontent.com/react-chunky/react-chunky/master/assets/c-logo-h.png">
   </a>
 
-<h3 align="center"> 
-<a> The Full </a>
-<a> The Full </a>
-</h3>
+<p align="center"> 
+<a href=""> The Full </a>
+<a href="" The Full </a>
+</p>
 Chunky helps entry-level developers become Full Stack Product Developers by providing a Creative Opinionated Developer Experience for building Native Mobile Apps, Web Apps, Static Websites and Serverless Cloud Backends. 
 
 <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
