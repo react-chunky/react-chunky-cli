@@ -1,5 +1,5 @@
-## 1. Run the product on one or more platforms
+## 1. [run]
 
-### [run](/guide/run)
- 
- <a href="/docs" class="btn btn-primary btn-md">My button</a>
+**Run the product on one or more platforms**
+
+### [Detailed Usage](/guide/run)
