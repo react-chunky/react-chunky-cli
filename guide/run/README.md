@@ -1,6 +1,6 @@
-## 1. Run the product on one or more platforms
+## Run the product on one or more platforms
 
-#### 1.1 Run on all platforms
+#### Run on all platforms
 
 *Platforms: iOS, Android, Web*
 
