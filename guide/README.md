@@ -5,18 +5,18 @@
     <img width="256" src="https://raw.githubusercontent.com/react-chunky/react-chunky/master/assets/c-logo-h.png">
   </a>
 
-  <p align="center">
-    <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/CLI%20Tool-react--chunky--cli-blue.svg"> </a>
-    <a href="https://github.com/react-chunky/react-native-chunky"> <img src="https://img.shields.io/badge/Mobile%20Framework-react--native--chunky-yellow.svg"> </a>
-    <a href="https://github.com/react-chunky/react-dom-chunky"> <img src="https://img.shields.io/badge/Web%20Framework-react--dom--chunky-red.svg"> </a>
- </p>
-
   <h3 align="center"> The Full Stack Product Development Platform (for mere mortals) </h3>
   <p align="center"> Chunky helps aspiring and seasoned developers quickly develop an idea into a scalable full stack product. </p>
 
+  <p align="center">
+    <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/CLI%20Tool-react--chunky--cli-brightgreen.svg"> </a>
+    <a href="https://github.com/react-chunky/react-native-chunky"> <img src="https://img.shields.io/badge/Mobile%20Framework-react--native--chunky-brightgreen.svg"> </a>
+    <a href="https://github.com/react-chunky/react-dom-chunky"> <img src="https://img.shields.io/badge/Web%20Framework-react--dom--chunky-brightgreen.svg"> </a>
+ </p>
+
 </p>
 
-# Welcome
+# The Chunky CLI
 
 Welcome to the Chunky CLI User Guide.
 
