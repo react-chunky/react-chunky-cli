@@ -1,9 +1,4 @@
 <p align="center">
- <h1 align="center"> The Chunky CLI User Guide</h1>
-    <p align="center">
-        <a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
-    </p>
-
   <a href="https://github.com/react-chunky/react-chunky">
     <img height="256" src="https://raw.githubusercontent.com/react-chunky/react-chunky/master/assets/c-logo.gif">
     <br/>
@@ -17,7 +12,6 @@
     <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/The%20Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
     <a href="https://github.com/react-chunky/react-native-chunky"> <img src="https://img.shields.io/badge/The%20Chunky%20Mobile%20Framework-react--native--chunky-brightgreen.svg"> </a>
  </p>
-
 </p>
 
 # Welcome
