@@ -1,6 +1,6 @@
-<h3 align="center"> The Chunky CLI User Guide</h3>
-    <p align="center">
-    <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/react--chunky--cli-core-blue.svg"> </a>
+<h1 align="center"> The Chunky CLI User Guide</13>
+<p align="center">
+    <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/react--chunky--cli-The-Chunky-CLI-blue.svg"> </a>
     <a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
  </p>
 
