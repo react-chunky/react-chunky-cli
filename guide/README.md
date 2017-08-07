@@ -6,7 +6,7 @@
   </a>
 
 
-<a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
+<a align="center" href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
 
 
   <h3 align="center"> The Full Stack Product Development Platform That Makes Creating Products Feel Like Play.  </h3>
