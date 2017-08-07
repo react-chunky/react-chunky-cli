@@ -6,8 +6,9 @@
   </a>
 
 <p align="center"> 
-<a href=""> The Full </a>
-<a href="" The Full </a>
+<a href=""> CLI </a> |
+<a href=""> Mobile Framework </a> |
+<a href=""> Web Framework </a>
 </p>
 Chunky helps entry-level developers become Full Stack Product Developers by providing a Creative Opinionated Developer Experience for building Native Mobile Apps, Web Apps, Static Websites and Serverless Cloud Backends. 
 
