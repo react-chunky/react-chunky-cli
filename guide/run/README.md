@@ -44,14 +44,14 @@ chunky run --ios --web
 chunky run --android --web
 ```
  
-#### Specify a custom port for the mobile packager
+#### Specify a custom mobile packager port
 
 ```
-chunky run --mobile-port 9004
+chunky run --mobile-packager-port 9004
 ```
 
-#### Specify a custom port for the web packager
+#### Specify a custom web packager port
 
 ```
-chunky run --web-port 9005
+chunky run --web-packager-port 9005
 ```

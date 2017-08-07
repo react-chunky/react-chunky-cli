@@ -1,6 +1,6 @@
 name: chunky
 commands:
-- name: start
+- name: run
   description: Run the product on one or more platforms
   executor: executors/run
   options:
@@ -12,6 +12,12 @@ commands:
     type: boolean
   - name: web
     description: Run the product on a Web browser
+    type: boolean
+  - name: mobile-packager-port
+    description: Specify a custom mobile packager port
+    type: boolean
+  - name: web-packager-port
+    description: Specify a custom web packager port
     type: boolean
 
 # name: chunky
