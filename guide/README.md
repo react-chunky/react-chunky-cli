@@ -6,9 +6,9 @@
   </a>
 
 <p align="center"> 
-<a href=""> CLI </a> |
-<a href=""> Mobile Framework </a> |
-<a href=""> Web Framework </a>
+<a href="https://github.com/react-chunky/react-chunky-cli"> CLI </a> |
+<a href="https://github.com/react-chunky/react-native-chunky"> Mobile Framework </a> |
+<a href="https://github.com/react-chunky/react-dom-chunky"> Web Framework </a>
 </p>
 
 <h3 align="center"> 
