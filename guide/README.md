@@ -7,8 +7,9 @@
 
 <p align="center"> 
 <a href="https://github.com/react-chunky/react-chunky-cli"> CLI </a> |
-<a href="https://github.com/react-chunky/react-native-chunky"> Mobile Framework </a> |
-<a href="https://github.com/react-chunky/react-dom-chunky"> Web Framework </a> |
+<a href="https://github.com/react-chunky/react-native-chunky"> Mobile </a> |
+<a href="https://github.com/react-chunky/react-dom-chunky"> Web </a> |
+<a href="https://github.com/react-chunky/react-cloud-chunky"> Cloud </a> |
 <a href="https://github.com/react-chunky/react-chunky-market"> Marketplace </a>
 </p>
 
