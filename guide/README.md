@@ -11,8 +11,15 @@ npm -ig react-chunky-cli
 # Overview
 
 * [run](#run)
-  * [Run on all platforms](run-on-all-platforms)
-  * [Run on iOS only](run-on-ios-only)
+  * [Run on all platforms](#run-on-all-platforms)
+  * [Run on iOS only](#run-on-ios-only)
+  * [Run on Android only](#run-on-android-only)
+  * [Run on Web only](#run-on-web-only)
+  * [Run on iOS and Android only](#run-on-ios-and-android-only)
+  * [Run on iOS and Web only](#run-on-ios-and-web-only)
+  * [Run on Android and Web only](#run-on-android-and-web-only)
+  * [Specify a custom mobile packager port](#specify-a-custom-mobile-packager-port)
+  * [Specify a custom web packager port](#specify-a-custom-web-packager-port)
 * [new](#new)
 
 # Commands Usage Instructions
