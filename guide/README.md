@@ -1,3 +1,7 @@
 ## Commands
 
-#### [Run the product on one or more platforms](/guide/run)
+#### run
+
+**Run the product on one or more platforms**
+
+[View Usage](/guide/run)
