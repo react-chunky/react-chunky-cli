@@ -4,6 +4,7 @@
     <br/>
     <img width="256" src="https://raw.githubusercontent.com/react-chunky/react-chunky/master/assets/c-logo-h.png">
   </a>
+
   <a href="https://github.com/react-chunky/react-chunky">
     <img height="256" src="https://raw.githubusercontent.com/react-chunky/react-chunky/master/assets/c-logo.gif">
     <br/>
