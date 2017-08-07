@@ -8,7 +8,7 @@ This guide outlines all the available CLI commands that a developer can use to i
 npm -ig react-chunky-cli
 ```
 
-# Overview
+# Commands Overview
 
 * [run](#run)
   * [Run on all platforms](#run-on-all-platforms)
@@ -82,4 +82,22 @@ chunky run --mobile-packager-port 9004
 
 ```
 chunky run --web-packager-port 9005
+```
+
+## new
+
+*Creates a new product artifact*
+
+#### Create a new product
+
+*Creates the product from a default template*
+
+```
+$ chunky init 
+```
+
+or 
+
+```
+$ chunky init --app 
 ```
