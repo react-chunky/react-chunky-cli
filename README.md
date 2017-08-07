@@ -16,7 +16,7 @@
  </p>
 </p>
 
-Chunky helps aspiring and seasoned developers quickly develop an idea into a full stack product.
+Chunky helps aspiring and seasoned developers quickly develop an idea into a scalable full stack product.
    
 # Installation
 
@@ -28,8 +28,8 @@ npm -ig react-chunky-cli
 
 # The Chunky CLI
 
-Once you install he Chunky Command-Line Interface (CLI), you get instant access to the Chunky Platform and all its capabilities, right in your terminal.
+Once you install the Chunky Command-Line Interface (CLI), you get instant access to the Chunky Platform and all its capabilities, right in your terminal.
 
-Simply type  ```$ chunky``` in your terminal to get a list of all available commands and options and view the User Guide for detailed usage instructions and examples what you can accomplish with the Chunky CLI.
+Simply type  ```chunky``` in your terminal to get a list of all available commands and options and view the User Guide for detailed usage instructions and examples what you can accomplish with the Chunky CLI.
 
 [View The Chunky CLI User Guide](/guide)
