@@ -10,17 +10,21 @@
     <img width="256" src="https://raw.githubusercontent.com/react-chunky/react-chunky/master/assets/c-logo-h.png">
   </a>
 
-  <h3 align="center"> The (kinda) Full Stack React Framework (for mere mortals) </h3>
-    <p align="center">
+  <h3 align="center"> The Full Stack Product Development Platform (for mere mortals) </h3>
+  <p align="center">
     <a href="https://github.com/react-chunky/react-chunky"> <img src="https://img.shields.io/badge/react--chunky-core-blue.svg"> </a>
     <a href="https://www.npmjs.com/package/react-chunky"> <img src="https://img.shields.io/npm/v/react-chunky.svg"> </a>
     <a href="https://travis-ci.org/react-chunky/react-chunky"> <img src="https://travis-ci.org/react-chunky/react-chunky.svg?branch=master"> </a>
     <a href="https://codeclimate.com/github/react-chunky/react-chunky"> <img src="https://codeclimate.com/github/react-chunky/react-chunky/badges/coverage.svg"> </a>
     <a href="https://codeclimate.com/github/react-chunky/react-chunky"> <img src="https://codeclimate.com/github/react-chunky/react-chunky/badges/gpa.svg"> </a>
  </p>
+
+ <h4>
+Chunky helps aspiring and seasoned developers quickly develop an idea into a scalable full stack product.
+
+ </h4>
 </p>
 
-Chunky is a (ridiculously) opinionated framework that helps you write *better* React Apps by organizing functionality in modular, reusable, composable and delicious *chunks*.
 
 # Welcome
 
