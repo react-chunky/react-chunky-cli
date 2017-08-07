@@ -1,58 +1,80 @@
 name: chunky
 commands:
-  - name: update
-    description: update your Chunky CLI
-    executor: commands/update
-  - name: init
-    description: create a new app
-    executor: commands/newApp
-    options:
-    - name: name
-      description: the application name
-      type: string
-    - name: template
-      description: start from a template
-      type: string
-  - name: chunk
-    description: create a new chunk
-    executor: commands/newChunk
-    options:
-    - name: name
-      description: the chunk name
-      type: string
-    - name: template
-      description: start from a template
-      type: string
-  - name: start
-    description: start the React Native packager
-    executor: commands/runPackager
+- name: start
+  description: Run the product on one or more platforms
+  executor: executors/run
+  options:
   - name: ios
-    description: run the app on iOS
-    executor: commands/runiOS
-    options:
-    - name: release
-      description: build the iOS release build
-      type: boolean
+    description: Run the product on an iOS device
+    type: boolean
   - name: android
-    description: run the app on Android
-    executor: commands/runAndroid
-    options:
-    - name: release
-      description: build the Android release build
-      type: boolean
-  - name: status
-    description: checks the current context status
-    executor: commands/status
-  - name: firebaseline
-    description: executes a FirebaseLine
-    executor: commands/firebaseline
-    options:
-    - name: profile
-      description: the Firebase profile to use 
-      type: string
-    - name: groups
-      description: build only these (comma-separated) groups
-      type: string
-    - name: adminPass
-      description: the admin password
-      type: string
+    description: Run the product on an Android device
+    type: boolean
+  - name: web
+    description: Run the product on a Web browser
+    type: boolean
+
+# name: chunky
+# commands:
+#   - name: update
+#     description: update your Chunky CLI
+#     executor: commands/update
+#   - name: init
+#     description: create a new app
+#     executor: commands/newApp
+#     options:
+#     - name: name
+#       description: the application name
+#       type: string
+#     - name: template
+#       description: start from a template
+#       type: string
+#   - name: chunk
+#     description: create a new chunk
+#     executor: commands/newChunk
+#     options:
+#     - name: name
+#       description: the chunk name
+#       type: string
+#     - name: template
+#       description: start from a template
+#       type: string
+#   - name: start
+#     description: start the React Native packager
+#     executor: commands/runPackager
+#   - name: ios
+#     description: run the app on iOS
+#     executor: commands/runiOS
+#     options:
+#     - name: release
+#       description: build the iOS release build
+#       type: boolean
+#   - name: android
+#     description: run the app on Android
+#     executor: commands/runAndroid
+#     options:
+#     - name: release
+#       description: build the Android release build
+#       type: boolean
+#   - name: status
+#     description: checks the current context status
+#     executor: commands/status
+#   - name: cloud
+#     description: interact with your ChunkyCloud
+#     executor: commands/cloud
+#     options:
+#     - name: env
+#       description: the cloud environment
+#       type: string
+#     - name: deploy
+#       description: deploy the specified cloud service
+#       type: string
+#     - name: transform
+#       description: run a series of transformations
+#       type: string
+#     - name: reset
+#       description: reset the environment
+#       type: string
+#     - name: sync
+#       description: sync cloud data
+#       type: string
