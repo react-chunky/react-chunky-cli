@@ -9,6 +9,7 @@
 The Full Stack Product Development Platform That Makes Creating Products Feel Like Play.  
 </h3>
 Chunky helps entry-level developers become Full Stack Product Developers by providing a Creative Opinionated Developer Experience for building Native Mobile Apps, Web Apps, Static Websites and Serverless Cloud Backends. 
+<a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
 
 <h3 align="center"> 
 The Full Stack Product Development Platform That Makes Creating Products Feel Like Play.  
