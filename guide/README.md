@@ -1,6 +1,6 @@
-## Commands
+# Commands
 
-#### run
+## run
 
 **Run the product on one or more platforms**
 
