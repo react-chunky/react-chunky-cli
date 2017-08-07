@@ -42,6 +42,8 @@ $ chunky
 
 # Commands Usage Instructions
 
+Now that you're all setup with Node.js and with the Chunky CLI, let's explore the available commands and see what Chunky can do for you. Here below is the complete list of all the commands available through the Chunky CLI. Have fun and don't forget to show & share your love for Chunky!
+
 ## run
 
 *Runs the product on one or more platforms*
