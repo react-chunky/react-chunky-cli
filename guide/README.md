@@ -8,13 +8,13 @@ This guide outlines all the available CLI commands that a developer can use to i
 npm -ig react-chunky-cli
 ```
 
-## Chunky CLI Commands
+## Commands Usage Instructions
 
 ### run
 
-*Run the product on one or more platforms*
+*Runs the product on one or more platforms*
 
-#### Run on all platforms
+##### Run on all platforms
 
 *Platforms: iOS, Android, Web*
 
