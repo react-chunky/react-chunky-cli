@@ -7,17 +7,13 @@
 
   <h3 align="center"> The Full Stack Product Development Platform (for mere mortals) </h3>
   <p align="center"> Chunky helps aspiring and seasoned developers quickly develop an idea into a scalable full stack product. </p>
-
-  <p align="center">
-    <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/CLI%20Tool-react--chunky--cli-brightgreen.svg"> </a>
-    <a href="https://github.com/react-chunky/react-native-chunky"> <img src="https://img.shields.io/badge/Mobile%20Framework-react--native--chunky-brightgreen.svg"> </a>
-    <a href="https://github.com/react-chunky/react-dom-chunky"> <img src="https://img.shields.io/badge/Web%20Framework-react--dom--chunky-brightgreen.svg"> </a>
- </p>
-
+  <hr/>
+  
 </p>
 
 # The Chunky CLI 
-
+    
+<a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/CLI%20Tool-react--chunky--cli-brightgreen.svg"> </a>
 <a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
 
 Welcome to the Chunky CLI User Guide.
