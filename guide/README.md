@@ -16,6 +16,8 @@ The Full Stack Product Development Platform That Makes Creating Products Feel Li
 </h3>
 Chunky helps entry-level developers become Full Stack Product Developers by providing a Creative Opinionated Developer Experience for building Native Mobile Apps, Web Apps, Static Websites and Serverless Cloud Backends. 
 
+<br/>
+
 <p align="center"> 
 <a href="http://chunky.io"> chunky.io </a>
 </p>
