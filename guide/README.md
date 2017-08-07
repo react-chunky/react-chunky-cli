@@ -2,10 +2,24 @@
 
 Welcome to the Chunky CLI User Guide.
 
-This guide outlines all the available CLI commands that a developer can use to interface with the Chunky Platform. The guide is intended as the main starting point for aspiring or seasoned developers who are interested in the Chunky Platform. If you have not installed the Chunky CLI yet, please do so now before moving on:
+This guide outlines all the available CLI commands that a developer can use to interface with the Chunky Platform. The guide is intended as the main starting point for aspiring or seasoned developers who are interested in the Chunky Platform. If you have not installed the Chunky CLI yet, [please do so now before moving on](#installation).
+
+# Installation
+
+In order to be able to install the Chunky CLI, please make sure you have Node.js v6+ installed on your development machine.
+
+[Download Node.js](https://nodejs.org/en/)
+
+Once you have Node.js installed, you can simply install the Chunky CLI as follows:
 
 ```
 npm -ig react-chunky-cli
+```
+
+You should now have access to the Chunky CLI in your terminal. To check that you've successfully installed the Chunky CLI, just open up your terminal and type:
+
+```
+$ chunky
 ```
 
 # Commands Overview
