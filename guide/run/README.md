@@ -1,6 +1,6 @@
-##1. ```run``` Run the product on one or more platforms
+## 1. Run the product on one or more platforms
 
-**1.1 Run on all the platforms**
+[####1.1 Run on all the platforms**](#run)
 
 *Platforms: iOS, Android, Web*
 
