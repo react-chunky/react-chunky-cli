@@ -1,5 +1,7 @@
 # The Chunky CLI User Guide
 
+<a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
+
 Welcome to the Chunky CLI User Guide.
 
 This guide outlines all the available CLI commands that a developer can use to interface with the Chunky Platform. The guide is intended as the main starting point for aspiring or seasoned developers who are interested in the Chunky Platform. If you have not installed the Chunky CLI yet, [please do so now before moving on](#installation).
