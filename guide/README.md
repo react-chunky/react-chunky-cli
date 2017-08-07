@@ -18,7 +18,7 @@
 
 # The Chunky CLI 
 
-[https://img.shields.io/npm/v/react-chunky-cli.svg](https://www.npmjs.com/package/react-chunky-cli)
+<a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
 
 Welcome to the Chunky CLI User Guide.
 
