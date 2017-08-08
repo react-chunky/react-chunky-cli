@@ -21,6 +21,8 @@ Chunky helps entry-level developers become Full Stack Product Developers by prov
   
 </p>
 
+---
+
 # The Chunky CLI 
     
 <a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
