@@ -18,7 +18,7 @@ Chunky helps entry-level developers become Full Stack Product Developers by prov
 <a href="https://github.com/react-chunky/react-chunky-market"> Marketplace </a>
 </h3>
 
-<br/><br/>
+<br/>
   
 </p>
 
