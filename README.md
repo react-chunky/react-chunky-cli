@@ -51,6 +51,12 @@ $ chunky
 
 # Commands Overview
 
+* [start](#start)
+  * [Start all packagers](#start-all-packagers)
+  * [Start the mobile packager](#start-the-mobile-packager)
+  * [Start the web packager](#start-the-web-packager)
+  * [Specify a custom mobile packager port](#specify-a-custom-mobile-packager-port)
+  * [Specify a custom web packager port](#specify-a-custom-web-packager-port)
 * [run](#run)
   * [Run on all platforms](#run-on-all-platforms)
   * [Run on iOS only](#run-on-ios-only)
@@ -59,13 +65,47 @@ $ chunky
   * [Run on iOS and Android only](#run-on-ios-and-android-only)
   * [Run on iOS and Web only](#run-on-ios-and-web-only)
   * [Run on Android and Web only](#run-on-android-and-web-only)
-  * [Specify a custom mobile packager port](#specify-a-custom-mobile-packager-port)
-  * [Specify a custom web packager port](#specify-a-custom-web-packager-port)
 * [new](#new)
 
 # Commands Usage Instructions
 
 Now that you're all setup with Node.js and with the Chunky CLI, let's explore the available commands and see what Chunky can do for you. Here below is the complete list of all the commands available through the Chunky CLI. Have fun and don't forget to show & share your love for Chunky!
+
+## start
+
+*Starts the packagers in development mode*
+
+#### Start all packagers
+
+*Platforms: Mobile, Web*
+
+```
+$ chunky start
+```
+
+#### Start the mobile packager
+
+```
+$ chunky start --mobile
+```
+
+#### Start the web packager
+
+```
+$ chunky start --web
+```
+
+#### Specify a custom mobile packager port
+
+```
+chunky start --mobile-port 9004
+```
+
+#### Specify a custom web packager port
+
+```
+chunky run --web-port 9005
+```
 
 ## run
 
@@ -115,18 +155,6 @@ chunky run --ios --web
 chunky run --android --web
 ```
  
-#### Specify a custom mobile packager port
-
-```
-chunky run --mobile-packager-port 9004
-```
-
-#### Specify a custom web packager port
-
-```
-chunky run --web-packager-port 9005
-```
-
 ## new
 
 *Creates a new product artifact*
