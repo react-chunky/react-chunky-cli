@@ -12,10 +12,10 @@ Chunky helps aspiring, entry-level and seasoned developers become Full Stack Pro
 
 <h3 align="center">
 <a href="http://chunky.io"> start </a> •
-<a href="https://github.com/react-chunky/react-chunky-cli"> cli </a> •
-<a href="https://github.com/react-chunky/react-native-chunky"> mobile </a> •
-<a href="https://github.com/react-chunky/react-dom-chunky"> web </a> •
-<a href="https://github.com/react-chunky/react-cloud-chunky"> cloud </a> •
-<a href="https://github.com/react-chunky/react-chunky-market"> marketplace </a>
+<a href="http://chunky.io/cli"> cli </a> •
+<a href="http://chunky.io/mobile"> mobile </a> •
+<a href="http://chunky.io/web"> web </a> •
+<a href="http://chunky.io/cloud"> cloud </a> •
+<a href="http://chunky.io/templates"> templates </a>
 </h3>
 </p>
