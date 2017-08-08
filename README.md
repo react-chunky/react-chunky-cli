@@ -5,17 +5,17 @@
     <img width="256" src="https://raw.githubusercontent.com/react-chunky/react-chunky/master/assets/c-logo-h.png">
   </a>
 
+<h3 align="center"> 
+The Full Stack Product Development Platform That Makes Creating Products Feel Like Play.  
+</h3>
+Chunky helps entry-level developers become Full Stack Product Developers by providing a Creative Opinionated Developer Experience for building Native Mobile Apps, Web Apps, Static Websites and Serverless Cloud Backends. 
+
 <h3 align="center">CLI •
 <a href="https://github.com/react-chunky/react-native-chunky"> Mobile </a> •
 <a href="https://github.com/react-chunky/react-dom-chunky"> Web </a> •
 <a href="https://github.com/react-chunky/react-cloud-chunky"> Cloud </a> •
 <a href="https://github.com/react-chunky/react-chunky-market"> Marketplace </a>
 </h3>
-
-<h3 align="center"> 
-The Full Stack Product Development Platform That Makes Creating Products Feel Like Play.  
-</h3>
-Chunky helps entry-level developers become Full Stack Product Developers by providing a Creative Opinionated Developer Experience for building Native Mobile Apps, Web Apps, Static Websites and Serverless Cloud Backends. 
   
 </p>
 
