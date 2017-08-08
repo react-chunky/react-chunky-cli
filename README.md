@@ -12,11 +12,8 @@ Chunky helps entry-level developers become Full Stack Product Developers by prov
 
 
 <p align="center"> 
-**CLI** | 
-[**CLI**](https://github.com/react-chunky/react-native-chunky)
-
-**CLI** </a> |
-<a href="https://github.com/react-chunky/react-native-chunky"> **Mobile** </a> |
+<h4>CLI</h4>  |
+<a href="https://github.com/react-chunky/react-native-chunky"> <h4> Mobile </h4> </a> |
 <a href="https://github.com/react-chunky/react-dom-chunky"> Web </a> |
 <a href="https://github.com/react-chunky/react-cloud-chunky"> Cloud </a> |
 <a href="https://github.com/react-chunky/react-chunky-market"> Marketplace </a>
