@@ -29,4 +29,4 @@
 
 The Chunky CLI is your main starting point to the Chunky Platform. It gives you all the power of the platform through a suite of commands and options that enable you to get started quickly and get going with minimal effort.
 
-<a href="/guide"> Read The User Guide </a>
+<a href="/guide"> Read The Chunky CLI User Guide </a>
