@@ -14,9 +14,6 @@
 <a href="https://github.com/react-chunky/react-chunky-market"> Marketplace </a>
 </h3>
 
-<br/>
-
-
 <h3 align="center"> 
 The Full Stack Product Development Platform That Makes Creating Products Feel Like Play.  
 </h3>
