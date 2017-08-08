@@ -16,7 +16,7 @@ Chunky helps aspiring, entry-level and seasoned developers become Full Stack Pro
 <a href="http://chunky.io/mobile"> mobile </a> •
 <a href="http://chunky.io/web"> web </a> •
 <a href="http://chunky.io/cloud"> cloud </a> •
-<a href="http://chunky.io/templates"> templates </a>
+<a href="http://chunky.io/templates"> templates </a> •
 <a href="http://chunky.io/chunks"> chunks </a>
 </h3>
 </p>
