@@ -12,21 +12,19 @@ Chunky helps entry-level developers become Full Stack Product Developers by prov
 
 
 <h3 align="center">CLI •
-<a href="https://github.com/react-chunky/react-native-chunky" style="border: 1px solid #cccccc;"> Mobile </a> •
+<a href="https://github.com/react-chunky/react-native-chunky"> Mobile </a> •
 <a href="https://github.com/react-chunky/react-dom-chunky"> Web </a> •
 <a href="https://github.com/react-chunky/react-cloud-chunky"> Cloud </a> •
 <a href="https://github.com/react-chunky/react-chunky-market"> Marketplace </a>
 </h3>
+
 <hr/>
   
 </p>
 
----
-
 # The Chunky CLI 
     
-<a href="https://github.com/react-chunky/react-chunky-cli"> <img src="https://img.shields.io/badge/Chunky%20CLI-react--chunky--cli-brightgreen.svg"> </a>
-<a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"> </a>
+<a href="https://www.npmjs.com/package/react-chunky-cli"> <img src="https://img.shields.io/npm/v/react-chunky-cli.svg"></a>
 
 Welcome to the Chunky CLI User Guide.
 
