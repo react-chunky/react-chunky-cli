@@ -65,7 +65,11 @@ $ chunky
   * [Run on iOS and Android only](#run-on-ios-and-android-only)
   * [Run on iOS and Web only](#run-on-ios-and-web-only)
   * [Run on Android and Web only](#run-on-android-and-web-only)
-* [new](#new)
+* [init](#init)
+  * [Create a new product](#create-a-new-product)
+  * [Create a new product from a product template](#create-a-new-product-from-a-product-template)
+  * [Create a new chunk](#create-a-new-chunk)
+  * [Create a new chunk from a chunk template](#create-a-new-chunk-from-a-chunk-template)
 
 # Commands Usage Instructions
 
@@ -155,20 +159,40 @@ chunky run --ios --web
 chunky run --android --web
 ```
  
-## new
+## init
 
 *Creates a new product artifact*
 
 #### Create a new product
 
-*Creates the product from a default template*
+*Creates the product from a default product template*
 
 ```
-$ chunky init 
+$ chunky init --name MyProduct
 ```
 
 or 
 
 ```
-$ chunky init --app 
+$ chunky init --app --name MyProduct
+```
+
+#### Create a new product from a product template
+
+```
+$ chunky init --name MyProduct --template conference
+```
+
+#### Create a new chunk
+
+*Creates the chunk from a default chunk template*
+
+```
+$ chunky init --chunk --name mychunk
+```
+
+#### Create a new chunk from a chunk template
+
+```
+$ chunky init --chunk --name mychunk --template list
 ```
