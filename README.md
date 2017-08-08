@@ -104,7 +104,7 @@ chunky start --mobile-port 9004
 #### Specify a custom web packager port
 
 ```
-chunky run --web-port 9005
+chunky start --web-port 9005
 ```
 
 ## run
