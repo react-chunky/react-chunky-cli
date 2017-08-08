@@ -19,7 +19,7 @@ Chunky helps aspiring, entry-level and seasoned developers become Full Stack Pro
 <a href="http://chunky.io/chunks"> chunks </a>
 </h3>
 
-<p align="center">
+<h2 align="center">
 <a href="http://chunky.io"> Get Started </a>
-</p>
+</h2>
 </p>
