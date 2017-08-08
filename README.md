@@ -11,14 +11,12 @@ The Full Stack Product Development Platform That Makes Creating Products Feel Li
 Chunky helps entry-level developers become Full Stack Product Developers by providing a Creative Opinionated Developer Experience for building Native Mobile Apps, Web Apps, Static Websites and Serverless Cloud Backends. 
 
 
-<p align="center"> 
-<h4 align="center">CLI  |
+<h3 align="center">CLI  |
 <a href="https://github.com/react-chunky/react-native-chunky"> Mobile </a> |
 <a href="https://github.com/react-chunky/react-dom-chunky"> Web </a> |
 <a href="https://github.com/react-chunky/react-cloud-chunky"> Cloud </a> |
 <a href="https://github.com/react-chunky/react-chunky-market"> Marketplace </a>
-</h4>
-</p>
+</h3>
 <hr/>
   
 </p>
