@@ -1,8 +1,12 @@
 const coreutils = require('coreutils')
+const create = require('./create')
 
 function parseCommand(command) {
-    coreutils.logger.info("Updating Chunky")
-    coreutils.run.npm(["i", "-gf", "react-chunky-cli"])
+    if (!command.name) {
+        command.name = "MyChunkyProduct"
+    }
+    
+    create(command.name, command.template) 
 }
 
 module.exports = function(command) {

@@ -1,86 +1,126 @@
 name: chunky
 commands:
-- name: run
-  description: Run the product on one or more platforms
+
+- name: init [name]
+  more: Specify a custom name or go with the default generated name
+  description: Create a new product
+  executor: executors/init
+  options:
+  - name: template
+    description: The product template to use
+    default: starter
+    type: string
+  examples:
+  - command: init MyProduct
+    description: Create a new product using the default template
+  - command: init MyProduct --template some-template
+    description: Create a new product using the specified template
+
+- name: start [platforms..]
+  description: Start the packagers for one or more platforms
+  more: The supported platforms are web and mobile
+  executor: executors/start
+  options:
+  - name: mobile-packager-port
+    description: Use a custom mobile packager port
+    type: string
+    default: 8081
+  - name: web-packager-port
+    description: Use a custom web packager port
+    default: 8082
+    type: string
+  examples:
+  - command: start
+    description: Start all the packagers, using the default ports
+  - command: start web mobile
+    description: Start the web and mobile packagers, using the default ports
+  - command: start mobile
+    description: Start the mobile packager only, using the default mobile port
+  - command: start web
+    description: Start the web packager only, using the default web port
+  - command: start --mobile-port 9200
+    description: Start all the packagers, using the default web port and a custom mobile port
+  - command: start mobile --mobile-port 9200
+    description: Start the mobile packager only, using a custom mobile port
+
+- name: run [platforms..]
+  description: Run the product
+  more: The supported platforms are ios, android, web and site
   executor: executors/run
   options:
-  - name: ios
-    description: Run the product on an iOS device
-    type: boolean
-  - name: android
-    description: Run the product on an Android device
-    type: boolean
-  - name: web
-    description: Run the product on a Web browser
-    type: boolean
-  - name: mobile-packager-port
-    description: Specify a custom mobile packager port
-    type: boolean
-  - name: web-packager-port
-    description: Specify a custom web packager port
-    type: boolean
+  - name: web-port
+    description: Use a custom web app port
+    default: 9091
+    type: string
+  - name: site-port
+    description: Use a custom site port
+    default: 9092
+    type: string
+  examples:
+  - command: run
+    description: Run the product on all the platforms
+  - command: run ios
+    description: Run the iOS app only
+  - command: run android
+    description: Run the Android app only
+  - command: run web
+    description: Run the Web app only
+  - command: run site
+    description: Run the Site only
 
-# name: chunky
-# commands:
-#   - name: update
-#     description: update your Chunky CLI
-#     executor: commands/update
-#   - name: init
-#     description: create a new app
-#     executor: commands/newApp
-#     options:
-#     - name: name
-#       description: the application name
-#       type: string
-#     - name: template
-#       description: start from a template
-#       type: string
+- name: transform [transforms..]
+  description: Apply transforms to the cloud data
+  more: Specify one or more transforms or blank to apply all
+  executor: executors/transform  
+  options:
+  - name: env
+    description: The cloud environment to be transformed
+    type: string
+    default: dev
+  - name: chunks
+    description: One or more chunks to search for transforms
+    type: array
+  examples:
+  - command: transform
+    description: Apply all transforms from all chunks to the default dev cloud environment
+  - command: transform --env staging
+    description: Apply all transforms from all chunks to the staging cloud environment
+  - command: transform posts --env production
+    description: Apply only the posts transform if any, from each chunk to the production cloud environment
+  - command: transform --chunks feed
+    description: Apply all the transform from the feed chunk to the default dev cloud environment
+  - command: transform posts --chunks feed
+    description: Apply only the posts transform from the feed chunk to the default dev cloud environment
+  - command: transform posts commends --chunks feed
+    description: Apply only the posts and comments transforms from the feed chunk to the default dev cloud environment
+  - command: transform messages --chunks friends inbox
+    description: Apply only the messages transform from the friends and inbox chunks to the default dev cloud environment
+
+# - name: deploy [service]
+#   description: Deploy to the cloud
+#   executor: executors/deploy  
+#   options:
+#   - name: env
+#     description: The cloud environment where to deploy
+#     default: dev
+#     type: string
 #   - name: chunk
-#     description: create a new chunk
-#     executor: commands/newChunk
-#     options:
-#     - name: name
-#       description: the chunk name
-#       type: string
-#     - name: template
-#       description: start from a template
-#       type: string
-#   - name: start
-#     description: start the React Native packager
-#     executor: commands/runPackager
-#   - name: ios
-#     description: run the app on iOS
-#     executor: commands/runiOS
-#     options:
-#     - name: release
-#       description: build the iOS release build
-#       type: boolean
-#   - name: android
-#     description: run the app on Android
-#     executor: commands/runAndroid
-#     options:
-#     - name: release
-#       description: build the Android release build
-#       type: boolean
-#   - name: status
-#     description: checks the current context status
-#     executor: commands/status
-#   - name: cloud
-#     description: interact with your ChunkyCloud
-#     executor: commands/cloud
-#     options:
-#     - name: env
-#       description: the cloud environment
-#       type: string
-#     - name: deploy
-#       description: deploy the specified cloud service
-#       type: string
-#     - name: transform
-#       description: run a series of transformations
-#       type: string
-#     - name: reset
-#       description: reset the environment
-#       type: string
-#     - name: sync
-#       description: sync cloud data
-#       type: string
+#     description: The chunk containing the assets to be deployed
+#     type: string
+#   examples:
+#   - command: deploy
+#     description: Deploy all the assets from all chunks to the default dev cloud environment
+#   - command: deploy --env staging
+#     description: Deploy all the assets from all chunks to the staging cloud environment
+#   - command: deploy functions
+#     description: Deploy only the cloud functions if any, from each chunk to the default dev cloud environment
+#   - command: deploy functions --chunk auth --env production
+#     description: Deploy only the cloud functions from the auth chunk to the production cloud environment
+  
+# - name: sync
+#   description: Sync cloud data
+#   executor: executors/run  
+#   options:
+#   - name: env
+#     description: The cloud environment to be affected
+#     type: string
