@@ -5,8 +5,8 @@ const apply = require('./apply')
 
 function parseCommand(command) {
     var config = loaders.loadSecureConfig()
-
-    if (!config || !config.cloud[command.env]) {
+ 
+     if (!config || !config.cloud[command.env]) {
         throw new Error(`Invalid secure cloud configuration or invalid cloud environment ${command.env}`)
     }
 

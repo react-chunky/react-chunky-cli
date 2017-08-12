@@ -1,6 +1,8 @@
 name: chunky
+footer:
+  suffix: "Chunky says:"
+  text: "enjoy and check out more info at http://chunky.io"
 commands:
-
 - name: init [name]
   more: Specify a custom name or go with the default generated name
   description: Create a new product
@@ -44,7 +46,7 @@ commands:
     description: Start the mobile packager only, using a custom mobile port
 
 - name: run [platforms..]
-  description: Run the product
+  description: Run the product on one or more platforms
   more: The supported platforms are ios, android, web and site
   executor: executors/run
   options:
@@ -96,26 +98,33 @@ commands:
   - command: transform messages --chunks friends inbox
     description: Apply only the messages transform from the friends and inbox chunks to the default dev cloud environment
 
-# - name: deploy [service]
-#   description: Deploy to the cloud
-#   executor: executors/deploy  
-#   options:
-#   - name: env
-#     description: The cloud environment where to deploy
-#     default: dev
-#     type: string
-#   - name: chunk
-#     description: The chunk containing the assets to be deployed
-#     type: string
-#   examples:
-#   - command: deploy
-#     description: Deploy all the assets from all chunks to the default dev cloud environment
-#   - command: deploy --env staging
-#     description: Deploy all the assets from all chunks to the staging cloud environment
-#   - command: deploy functions
-#     description: Deploy only the cloud functions if any, from each chunk to the default dev cloud environment
-#   - command: deploy functions --chunk auth --env production
-#     description: Deploy only the cloud functions from the auth chunk to the production cloud environment
+- name: deploy [artifacts..]
+  description: Deploy one or more product artifacts to the cloud
+  more: The supported artifacts are functions and assets
+  executor: executors/deploy
+  options:
+  - name: env
+    description: The cloud environment where to deploy
+    default: dev
+    type: string
+  - name: chunks
+    description: One or more chunks to search for artifacts
+    type: array
+  examples:
+  - command: deploy
+    description: Deploy all artifacts from all chunks to the default dev cloud environment
+  - command: deploy --env staging
+    description: Deploy all artifacts from all chunks to the staging cloud environment
+  - command: deploy functions
+    description: Deploy only the cloud functions from all chunks to the default dev cloud environment
+  - command: deploy assets
+    description: Deploy only the assets from all chunks to the default dev cloud environment
+  - command: deploy functions assets --env production
+    description: Deploy the cloud functions and assets from all chunks to the production cloud environment
+  - command: deploy functions --chunks friends inbox
+    description: Deploy only the cloud functions from the friends and inbox chunks to the default dev cloud environment
+  - command: deploy functions --chunks auth --env production
+    description: Deploy only the cloud functions from the auth chunk to the production cloud environment
   
 # - name: sync
 #   description: Sync cloud data

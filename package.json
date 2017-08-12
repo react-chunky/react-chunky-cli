@@ -32,7 +32,7 @@
     "os": "^0.1.1",
     "recursive-readdir": "^2.2.1",
     "serverless": "^1.18.1",
-    "slana": "^0.4.0",
+    "slana": "^0.4.6",
     "url-parse": "^1.1.9",
     "wpapi": "^1.1.2",
     "xml2js": "^0.4.17"
