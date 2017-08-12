@@ -37,7 +37,7 @@ function batchNextOperations(groups, chunk) {
            return batchNextOperations(groups.slice(1), chunk)
         }).
         catch(error => {
-           coreutils.logger.skip(`Skipped ${nextGroup} operations`)
+           coreutils.logger.skip(`Skipped ${nextGroup} operations (${error.message})`)
         })
 }
 

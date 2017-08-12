@@ -5,7 +5,7 @@ const web = require('./web')
 const site = require('./site')
 
 function parseCommand(command) {
-  if (command.platforms.length == 0) {
+   if (command.platforms.length == 0) {
         command.platforms = ["ios", "android", "web", "site"]
     }
 
@@ -24,7 +24,8 @@ function parseCommand(command) {
                 site(command.sitePort)
             break;
         }
-    })    }
+    })    
+}
 
 module.exports = function(command) {
     try {
