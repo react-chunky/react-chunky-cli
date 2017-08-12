@@ -1,10 +1,10 @@
 const coreutils = require('coreutils')
-const common = require('../../common')
+const loaders = require('../../src/loaders')
 const load = require('./load')
 const apply = require('./apply')
 
 function parseCommand(command) {
-    var config = common.loadSecureConfig()
+    var config = loaders.loadSecureConfig()
 
     if (!config || !config.cloud[command.env]) {
         throw new Error(`Invalid secure cloud configuration or invalid cloud environment ${command.env}`)
@@ -20,7 +20,7 @@ function parseCommand(command) {
         coreutils.logger.skip(`Skipping - no transforms to be applied`)
         return 
     }    
-
+    
     coreutils.logger.header(`Transforming the ${command.env} cloud environment`)
 
     // Next, apply them
