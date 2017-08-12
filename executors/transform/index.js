@@ -1,6 +1,5 @@
 const coreutils = require('coreutils')
 const loaders = require('../../src/loaders')
-const load = require('./load')
 const apply = require('./apply')
 
 function parseCommand(command) {
@@ -14,7 +13,7 @@ function parseCommand(command) {
     config = config.cloud[command.env]
 
     // First, load the transforms we care about
-    const transforms = load(command.chunks.filter(c => c), command.transforms)
+    const transforms = loaders.loadTransforms(command.chunks.filter(c => c), command.transforms)
 
     if (!transforms) {
         coreutils.logger.skip(`Skipping - no transforms to be applied`)

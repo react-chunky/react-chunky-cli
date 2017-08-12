@@ -19,13 +19,13 @@ function executeOperations(operations) {
     }))
 }
 
-function batchNextOperations(groups, chunk) {
+function batchNextOperations(groups, transform) {
     if (!groups || groups.length === 0) {
         return Promise.resolve()
     }
 
     const nextGroup = groups[0]
-    const nextOperations = chunk.operations[nextGroup]
+    const nextOperations = transform.data[nextGroup]
 
     if (!nextOperations || nextOperations.length === 0) {
         throw new Error(`Missing ${group} operations`)
@@ -34,16 +34,16 @@ function batchNextOperations(groups, chunk) {
     return executeOperations(nextOperations).
         then(result => {
            coreutils.logger.ok(`Finished ${nextGroup} operations`)
-           return batchNextOperations(groups.slice(1), chunk)
+           return batchNextOperations(groups.slice(1), transform)
         }).
         catch(error => {
            coreutils.logger.skip(`Skipped ${nextGroup} operations (${error.message})`)
         })
 }
 
-function performChunkOperations(chunk) {
-    const groups = Object.keys(chunk.operations)
-    return batchNextOperations(groups, chunk)
+function performChunkOperations(transform) {
+    const groups = Object.keys(transform.data)
+    return batchNextOperations(groups, transform)
 }
 
 function applyTransforms(transforms) {
@@ -51,9 +51,10 @@ function applyTransforms(transforms) {
         return Promise.resolve()
     }
 
-    const nextChunk = transforms[0]
-    coreutils.logger.info(`Applying the ${nextChunk.chunk} ${nextChunk.transform} transform ...`)
-    return performChunkOperations(nextChunk).then(() => {
+    const nextTransform = transforms[0]
+ 
+    coreutils.logger.info(`Applying the ${nextTransform.chunk} ${nextTransform.name} transform ...`)
+    return performChunkOperations(nextTransform).then(() => {
         coreutils.logger.done()
         return applyTransforms(transforms.slice(1))
     })
@@ -73,16 +74,5 @@ function initialize(config) {
 module.exports = function(config, transforms) {
     initialize(config)
     
-    var all = []
-
-    for(const chunkName in transforms) {
-        for(const transformName in transforms[chunkName]) {
-            const transform = transforms[chunkName][transformName]
-            all.push(Object.assign({ chunk: chunkName, transform: transformName, priority: 999 }, transform))
-        }
-    }
-
-    // Sort by priority
-    all.sort((a, b) => (a.priority - b.priority))
-    return applyTransforms(all)
+    return applyTransforms(transforms)
 }

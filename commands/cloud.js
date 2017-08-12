@@ -294,62 +294,62 @@ function deploy(service, options) {
     })
 }
 
-function transform(transformation, options) {
-    coreutils.logger.info(`Applying the ${transformation} transformation to the ${options.env} environment ...`)
+// function transform(transformation, options) {
+//     coreutils.logger.info(`Applying the ${transformation} transformation to the ${options.env} environment ...`)
 
-    runFirebaseline(transformation, options).then(() => {
-        coreutils.logger.info(`The ${transformation} transformation was successfully applied to the ${options.env} environment.`)
-        coreutils.logger.ok(`Enjoy!`)
-        process.exit(0)
-    }).catch(error => {
-        coreutils.logger.error(error)
-        process.exit(1)
-    })
-}
+//     runFirebaseline(transformation, options).then(() => {
+//         coreutils.logger.info(`The ${transformation} transformation was successfully applied to the ${options.env} environment.`)
+//         coreutils.logger.ok(`Enjoy!`)
+//         process.exit(0)
+//     }).catch(error => {
+//         coreutils.logger.error(error)
+//         process.exit(1)
+//     })
+// }
 
-function resetUsers() {
-    coreutils.logger.info(`Removing all users ...`)    
-    return firebaseline.operations.retrieve(firebase, { key: 'users' }).then(users => {
-        delete users._id
-        return Object.keys(users)
-    }).then(ids => {
-        return Promise.all(ids.map(id => firebaseline.operations.unregister(firebase, { id })))
-    }).then(() => {
-        coreutils.logger.ok(`All users have been removed.`)
-    })
-}
+// function resetUsers() {
+//     coreutils.logger.info(`Removing all users ...`)    
+//     return firebaseline.operations.retrieve(firebase, { key: 'users' }).then(users => {
+//         delete users._id
+//         return Object.keys(users)
+//     }).then(ids => {
+//         return Promise.all(ids.map(id => firebaseline.operations.unregister(firebase, { id })))
+//     }).then(() => {
+//         coreutils.logger.ok(`All users have been removed.`)
+//     })
+// }
 
-function resetData() {
-    coreutils.logger.info(`Removing all data ...`)
-    return firebaseline.operations.remove(firebase, { key: '/' }).
-    then(() => {
-        coreutils.logger.ok(`All data has been removed.`)
-    })
-}
+// function resetData() {
+//     coreutils.logger.info(`Removing all data ...`)
+//     return firebaseline.operations.remove(firebase, { key: '/' }).
+//     then(() => {
+//         coreutils.logger.ok(`All data has been removed.`)
+//     })
+// }
 
-function reset(parts, options) {
-    const allowed = { users: true, data: true }
-    var resetParts = {}
-    parts.split("+").forEach(part => (allowed[part] && (resetParts[part] = true)))
+// function reset(parts, options) {
+//     const allowed = { users: true, data: true }
+//     var resetParts = {}
+//     parts.split("+").forEach(part => (allowed[part] && (resetParts[part] = true)))
     
-    coreutils.logger.info(`Resetting the ${options.env} environment ...`)
-    coreutils.logger.ok(`Resetting ${Object.keys(resetParts).join(' & ')}`)
+//     coreutils.logger.info(`Resetting the ${options.env} environment ...`)
+//     coreutils.logger.ok(`Resetting ${Object.keys(resetParts).join(' & ')}`)
 
-    // Let's get Firebase setup
-    initializeFirebase(options.env)
+//     // Let's get Firebase setup
+//     initializeFirebase(options.env)
 
-    return Promise.resolve().
-           then(() => resetParts.users && resetUsers()).
-           then(() => resetParts.data && resetData()).
-           then(() => {
-             coreutils.logger.info(`Successfully reset the ${options.env} environment.`)
-             coreutils.logger.ok(`Enjoy!`)
-             process.exit(0)
-           }).catch(error => {
-             coreutils.logger.error(error)
-             process.exit(1)
-           })
-}
+//     return Promise.resolve().
+//            then(() => resetParts.users && resetUsers()).
+//            then(() => resetParts.data && resetData()).
+//            then(() => {
+//              coreutils.logger.info(`Successfully reset the ${options.env} environment.`)
+//              coreutils.logger.ok(`Enjoy!`)
+//              process.exit(0)
+//            }).catch(error => {
+//              coreutils.logger.error(error)
+//              process.exit(1)
+//            })
+// }
 
 function sync(system, options) {
     switch (system) {

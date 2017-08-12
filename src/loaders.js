@@ -1,5 +1,124 @@
 const path = require('path')
 const fs = require('fs-extra')
+const yaml = require('js-yaml')
+const URL = require('url-parse')
+    
+function _loadChunkArtifactAsYaml(chunk, type, artifact) {
+    const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + ".yaml")
+    
+    if (!fs.existsSync(artifactFile)) {
+        return
+    }
+
+    // Load all data as Yaml
+    const data = yaml.safeLoad(fs.readFileSync(artifactFile, 'utf8'));
+            
+    if (!data || Object.keys(data).length === 0) {
+        return
+    }
+
+    return data
+}
+
+function _loadChunkArtifactAsFilePath(chunk, type, artifact, ext) {
+    const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + "." + ext)
+
+    return fs.existsSync(artifactFile)
+}
+
+function _findChunkArtifacts(chunk, type, artifacts) {
+     try {
+        // Look up the config file for this chunk
+        const config = loadChunkConfig(chunk)
+
+        if (!config[type] || config[type].length === 0) {
+            // No artifacts defined
+            return []
+        }        
+
+        // Look up the artifacts dir
+        const artifactsDir = path.resolve(process.cwd(), 'chunks', chunk, type)
+
+        if (!fs.existsSync(artifactsDir)) {
+            // This chunk has no artifacts, even if it declared some
+            return {}
+        }
+
+        if (!artifacts || artifacts.length === 0) {
+            // We want all the artifacts in this chunk
+            artifacts = config[type]
+        } else {
+            artifacts = config[type].filter(a => {
+                var found = false
+                const aConfig = new URL(a, true)
+                artifacts.forEach(a2 => {
+                    if (a2 === aConfig.hostname) {
+                        found = true
+                        return
+                    }
+                })
+                return found
+            })
+        }
+
+       return artifacts.map(artifact => {
+            const url = new URL(artifact, true)
+            return { chunk, name: url.hostname, source: url.protocol.slice(0, -1), options: Object.assign({ priority: 99999 }, url.query )}
+        }).sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
+
+    } catch (e) {
+        return []
+    }   
+}
+
+function _loadChunkTransforms(chunk, transforms) {
+    transforms = _findChunkArtifacts(chunk, "transforms", transforms)
+    
+    // Look up all valid transforms and load them up
+    return transforms.map(transform => {
+        const data = _loadChunkArtifactAsYaml(chunk, "transforms", transform)
+        return Object.assign({}, transform, (data ? { data } : {}))
+    })
+}
+
+function _loadChunkFunctions(chunk) {
+    const functions = _findChunkArtifacts(chunk, "functions")
+    
+    // Look up all valid transforms and load them up
+    return functions.map(f => {
+        const data = _loadChunkArtifactAsFilePath(chunk, "functions", f, "js")
+        return Object.assign({}, f, (data ? { data } : {}))
+    })
+}
+
+function _load(chunks, loader, artifacts) {
+    // Figure out the chunks we need to look into
+    if (chunks.length === 0) {
+        chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js'))
+    }
+
+    var all = []
+    chunks.forEach(chunk => {
+        const data = loader(chunk, artifacts)
+        if (data && data.length > 0) {
+            all = all.concat(data)
+        }
+    })
+ 
+    if (all.length === 0) {
+        return 
+    }
+
+    return all.sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
+}
+
+function loadTransforms(chunks, transforms) {
+    return _load(chunks, _loadChunkTransforms, transforms)
+}
+
+function loadFunctions(chunks) {
+    return _load(chunks, _loadChunkFunctions)
+}
 
 function loadChunkConfig(chunk) {
     // The chunk config file
@@ -58,5 +177,7 @@ function loadSecureConfig() {
 
 module.exports = {
     loadSecureConfig,
-    loadChunkConfig
+    loadChunkConfig,
+    loadFunctions,
+    loadTransforms
 }

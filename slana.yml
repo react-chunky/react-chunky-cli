@@ -129,6 +129,9 @@ commands:
   - name: chunks
     description: One or more chunks to search for artifacts
     type: array
+  - name: remove
+    description: Remove the previously artifacts from the cloud
+    type: boolean
   examples:
   - command: deploy
     description: Deploy all artifacts from all chunks to the default dev cloud environment
@@ -144,6 +147,8 @@ commands:
     description: Deploy only the cloud functions from the friends and inbox chunks to the default dev cloud environment
   - command: deploy functions --chunks auth --env production
     description: Deploy only the cloud functions from the auth chunk to the production cloud environment
+  - command: deploy functions --remove
+    description: Remove all the previously deployed functions from the default dev cloud environment
   
 # - name: sync
 #   description: Sync cloud data
