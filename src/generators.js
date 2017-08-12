@@ -1,3 +1,16 @@
+
+function generateServerlessPackage(service, deployment) {
+    return {
+        name: service.name,
+        version: service.version,
+        description: "",
+        main: "service.js",
+        scripts: {},
+        author: "",
+        dependencies: service.dependencies
+    }
+}
+
 function generateServerlessManifest(service, deployment) {
     var base = {
         service: service.name,
@@ -20,11 +33,11 @@ function generateServerlessManifest(service, deployment) {
     
     service.functions.forEach(f => {
       base.functions[f.name] = {
-          handler: f.name,
+          handler: f.name + ".main",
           events: [{
               http: {
                   method: f.source,
-                  path: f.options.path,
+                  path: f.path,
                   cors: true,
                   integration: 'lambda'
               }
@@ -36,5 +49,6 @@ function generateServerlessManifest(service, deployment) {
 }
 
 module.exports = {
-    generateServerlessManifest
+    generateServerlessManifest,
+    generateServerlessPackage
 }

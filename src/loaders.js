@@ -22,14 +22,20 @@ function _loadChunkArtifactAsYaml(chunk, type, artifact) {
 
 function _loadChunkArtifactAsFilePath(chunk, type, artifact, ext) {
     const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + "." + ext)
-
-    return fs.existsSync(artifactFile)
+    
+    return (fs.existsSync(artifactFile) ? artifactFile : undefined)
 }
 
 function _findChunkArtifacts(chunk, type, artifacts) {
      try {
         // Look up the config file for this chunk
-        const config = loadChunkConfig(chunk)
+        var config = loadChunkConfig(chunk)
+        var dependencies = {}
+
+        if (type === 'functions') {
+            config = config.service
+            dependencies = config.dependencies
+        }
 
         if (!config[type] || config[type].length === 0) {
             // No artifacts defined
@@ -63,7 +69,11 @@ function _findChunkArtifacts(chunk, type, artifacts) {
 
        return artifacts.map(artifact => {
             const url = new URL(artifact, true)
-            return { chunk, name: url.hostname, source: url.protocol.slice(0, -1), options: Object.assign({ priority: 99999 }, url.query )}
+            return { chunk, name: url.hash.slice(1), 
+                     source: url.protocol.slice(0, -1), 
+                     dependencies,
+                     path: url.hostname + url.pathname,
+                     options: Object.assign({ priority: 99999 }, url.query )}
         }).sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 
     } catch (e) {
@@ -100,6 +110,7 @@ function _load(chunks, loader, artifacts) {
     var all = []
     chunks.forEach(chunk => {
         const data = loader(chunk, artifacts)
+
         if (data && data.length > 0) {
             all = all.concat(data)
         }

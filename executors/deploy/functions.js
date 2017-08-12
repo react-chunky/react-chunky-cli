@@ -4,19 +4,28 @@ const path = require('path')
 const fs = require('fs-extra')
 const loaders = require('../../src/loaders')
 const generators = require('../../src/generators')
+const cpy = require('cpy')
 
 function prepareService(service, deployment) {
     if (!fs.existsSync(service.dir)) {
         fs.mkdirsSync(service.dir)
     }
     
-    // Get a manifest
+    // Get a manifest and package
     const manifest = generators.generateServerlessManifest(service, deployment)
+    const package = generators.generateServerlessPackage(service, deployment)
 
+    // Generate the manifest
     fs.writeFileSync(path.resolve(service.dir, "serverless.json"), 
                      JSON.stringify(manifest, null, 2))
 
-    return Promise.resolve()
+    // Generate the package
+    fs.writeFileSync(path.resolve(service.dir, "package.json"), 
+                     JSON.stringify(package, null, 2))
+
+    // Copy the functions
+    const functionsSourceDir = path.resolve(process.cwd(), 'chunks', service.name, "functions")
+    return cpy([functionsSourceDir + '/*.js'], service.dir)
 }
 
 function deployService(service, deployment) {
@@ -59,6 +68,7 @@ module.exports = function(deployment) {
     var services = {}
     functions.forEach(f => {    
         services[f.chunk] = services[f.chunk] || {}
+        services[f.chunk].dependencies = Object.assign({}, services[f.chunk].dependencies || {}, f.dependencies)
         services[f.chunk].functions = services[f.chunk].functions || []
         services[f.chunk].functions.push(f)
     })
