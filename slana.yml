@@ -91,7 +91,7 @@ commands:
     description: Apply all the transform from the feed chunk to the default dev cloud environment
   - command: transform posts --chunks feed
     description: Apply only the posts transform from the feed chunk to the default dev cloud environment
-  - command: transform posts commends --chunks feed
+  - command: transform posts comments --chunks feed
     description: Apply only the posts and comments transforms from the feed chunk to the default dev cloud environment
   - command: transform messages --chunks friends inbox
     description: Apply only the messages transform from the friends and inbox chunks to the default dev cloud environment

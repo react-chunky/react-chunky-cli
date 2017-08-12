@@ -32,13 +32,13 @@ function loadChunkTransforms(chunk, transforms) {
         }   
 
         // Load all operations
-        const ops = yaml.safeLoad(fs.readFileSync(transformPath, 'utf8'));
+        const data = yaml.safeLoad(fs.readFileSync(transformPath, 'utf8'));
         
-        if (!ops || Object.keys(ops).length === 0) {
+        if (!data || Object.keys(data).length === 0) {
             return
         }
 
-        all[transform] = ops
+        all[transform] = data
     })
 
     return all
@@ -52,8 +52,15 @@ module.exports = function(chunks, transforms) {
 
     var all = {}
     chunks.forEach(chunk => {
-        all[chunk] = loadChunkTransforms(chunk, transforms)
+        const data = loadChunkTransforms(chunk, transforms)
+        if (data && Object.keys(data).length > 0) {
+            all[chunk] = data
+        }
     })
+
+    if (Object.keys(all).length === 0) {
+        return 
+    }
 
     return all
 }

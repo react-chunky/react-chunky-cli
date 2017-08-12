@@ -13,13 +13,23 @@ function parseCommand(command) {
     // The environment-specific configuration
     config = config.cloud[command.env]
 
-    coreutils.logger.info(`Transforming the ${command.env} cloud environment ...`)
-
     // First, load the transforms we care about
     const transforms = load(command.chunks.filter(c => c), command.transforms)
 
+    if (!transforms) {
+        coreutils.logger.skip(`Skipping - no transforms to be applied`)
+        return 
+    }    
+
+    coreutils.logger.header(`Transforming the ${command.env} cloud environment`)
+
     // Next, apply them
-    apply(config, transforms)
+    apply(config, transforms).then(() => {
+        coreutils.logger.footer(`Successfully transformed the ${command.env} cloud environment`)
+        process.exit(0)
+    }).catch(e => {
+        throw e
+    })
 }
 
 module.exports = function(command) {
