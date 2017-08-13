@@ -28,6 +28,10 @@ function prepareService(service, deployment) {
     return cpy([functionsSourceDir + '/*.js'], service.dir)
 }
 
+function installServiceDependencies(service, deployment) {
+    return coreutils.run.npmInstall(service.dir)
+}
+
 function deployService(service, deployment) {
     const serverless = new Serverless({
         interactive: false,
@@ -36,6 +40,7 @@ function deployService(service, deployment) {
 
     coreutils.logger.info(`${deployment.remove ? 'Removing' : 'Deploying'} ${service.name} service (${service.functions.length} functions)...`)
     return prepareService(service, deployment).
+           then(() => installServiceDependencies(service, deployment)).
            then(() => serverless.init({ commands: [deployment.remove ? 'remove' : 'deploy'], options: { env: deployment.env }})).
            then(() => serverless.run())
 }
