@@ -69,10 +69,13 @@ function _findChunkArtifacts(chunk, type, artifacts) {
 
        return artifacts.map(artifact => {
             const url = new URL(artifact, true)
-            return { chunk, name: url.hash.slice(1), 
+            const path = url.hostname + url.pathname
+            const name = url.hash.slice(1) || path
+            return { chunk, 
+                     name, 
                      source: url.protocol.slice(0, -1), 
                      dependencies,
-                     path: url.hostname + url.pathname,
+                     path,
                      options: Object.assign({ priority: 99999 }, url.query )}
         }).sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 
