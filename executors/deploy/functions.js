@@ -23,13 +23,21 @@ function prepareService(service, deployment) {
     fs.writeFileSync(path.resolve(service.dir, "package.json"), 
                      JSON.stringify(package, null, 2))
 
-    // Copy the functions
-    const functionsSourceDir = path.resolve(process.cwd(), 'chunks', service.name, "functions")
-    return cpy([functionsSourceDir + '/*.js'], service.dir)
+    // Figure out the chunk location
+    const productDir = path.resolve(process.cwd())
+    const chunkDir = path.resolve(productDir, 'chunks', service.name)
+
+    // Copy the chunk function and the chunk manifest over, along with global assets
+    return cpy([
+        chunkDir + '/functions/*', 
+        chunkDir + "/chunk.json",
+        productDir + "/.chunky.json",
+        productDir + "/chunky.json"
+    ], service.dir)
 }
 
 function installServiceDependencies(service, deployment) {
-    return coreutils.run.npmInstall(service.dir)
+    return (deployment.remove ? Promise.resolve : coreutils.run.npmInstall(service.dir))
 }
 
 function deployService(service, deployment) {

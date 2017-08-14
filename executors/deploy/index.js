@@ -19,6 +19,7 @@ function initialize(config, command) {
     const id = coreutils.string.uuid()
     const date = new Date()
     const timestamp = date.getTime()
+    const apiDomain = config.aws.apiDomain
 
     const deployPath = path.resolve(process.cwd(), '.chunky', 'deployments', id)
     if (!fs.existsSync(deployPath)) {
@@ -26,7 +27,15 @@ function initialize(config, command) {
     }
 
     // Create a fingerprint
-    const fingerprint = { id, date, timestamp, remove: command.remove, env: command.env, chunks: command.chunks.filter(c => c) }
+    const fingerprint = { 
+        id, 
+        date, 
+        timestamp, 
+        apiDomain,
+        remove: command.remove, 
+        env: command.env, 
+        chunks: command.chunks.filter(c => c),
+    }
     fs.writeFileSync(path.resolve(deployPath, 'fingerprint.json'), JSON.stringify(fingerprint, null, 2))
 
     return Object.assign({ dir: deployPath }, fingerprint)

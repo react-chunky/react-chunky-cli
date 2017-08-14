@@ -24,9 +24,23 @@ function generateServerlessManifest(service, deployment) {
             }
         },
         package: {
-            exclude: [".git/**"],
-            include: ["../../../../../chunky.json", "../../../../../.chunky.json"]
+            exclude: [".git/**"]
         }
+        // resources: {
+        //     Resources: {
+        //         pathmapping: {
+        //             Type: "AWS::ApiGateway::BasePathMapping",
+        //             Properties: {
+        //                 BasePath: "",
+        //                 DomainName: deployment.apiDomain,
+        //                 RestApiId: {
+        //                     Ref: "ApiGatewayRestApi"
+        //                 },
+        //                 Stage: deployment.env
+        //             }
+        //         }
+        //     }
+        // }
     }
 
     base.functions = {}
