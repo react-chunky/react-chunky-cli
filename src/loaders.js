@@ -47,7 +47,7 @@ function _findChunkArtifacts(chunk, type, artifacts) {
 
         if (!fs.existsSync(artifactsDir)) {
             // This chunk has no artifacts, even if it declared some
-            return {}
+            return []
         }
 
         if (!artifacts || artifacts.length === 0) {
@@ -58,7 +58,7 @@ function _findChunkArtifacts(chunk, type, artifacts) {
                 var found = false
                 const aConfig = new URL(a, true)
                 artifacts.forEach(a2 => {
-                    if (a2 === aConfig.hostname) {
+                    if (a2.toLowerCase() === aConfig.hostname.toLowerCase()) {
                         found = true
                         return
                     }
@@ -85,10 +85,10 @@ function _findChunkArtifacts(chunk, type, artifacts) {
 }
 
 function _loadChunkTransforms(chunk, transforms) {
-    transforms = _findChunkArtifacts(chunk, "transforms", transforms)
-    
+    const all = _findChunkArtifacts(chunk, "transforms", transforms)
+
     // Look up all valid transforms and load them up
-    return transforms.map(transform => {
+    return all.map(transform => {
         const data = _loadChunkArtifactAsYaml(chunk, "transforms", transform)
         return Object.assign({}, transform, (data ? { data } : {}))
     })

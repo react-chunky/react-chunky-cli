@@ -13,7 +13,6 @@ function executeOperations(operations) {
             // Ignore invalid operationss
             return
         }
-
         delete args.operation
         return operation(firebase, args)
     }))

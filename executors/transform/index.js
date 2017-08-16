@@ -13,12 +13,12 @@ function parseCommand(command) {
     config = config.cloud[command.env]
 
     // First, load the transforms we care about
-    const transforms = loaders.loadTransforms(command.chunks.filter(c => c), command.transforms)
+    const transforms = loaders.loadTransforms(command.chunks ? command.chunks.filter(c => c) : [], command.transforms)
 
     if (!transforms) {
         coreutils.logger.skip(`Skipping - no transforms to be applied`)
         return 
-    }    
+    }
     
     coreutils.logger.header(`Transforming the ${command.env} cloud environment`)
 
