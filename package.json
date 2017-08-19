@@ -1,6 +1,6 @@
 {
   "name": "react-chunky-cli",
-  "version": "0.8.6",
+  "version": "0.8.7",
   "description": "The Chunky CLI",
   "preferGlobal": true,
   "repository": {
@@ -23,6 +23,7 @@
     "cpy": "^4.0.1",
     "deepmerge": "^1.3.2",
     "ejs": "^2.5.6",
+    "feedparser": "^2.2.1",
     "firebase": "^4.1.3",
     "firebase-admin": "^5.1.0",
     "firebaseline": "0.x",
@@ -36,6 +37,7 @@
     "slana": "^0.x",
     "url-parse": "^1.1.9",
     "wpapi": "^1.1.2",
-    "xml2js": "^0.4.17"
+    "xml2js": "^0.4.17",
+    "xml2json": "^0.11.0"
   }
 }

@@ -2,17 +2,102 @@ const path = require('path')
 const fs = require('fs-extra')
 const yaml = require('js-yaml')
 const URL = require('url-parse')
-    
+const xml2json = require('xml2json')
+
+function _sanitizeKey(key) {
+  return key.replace(/[\$:]/g, '_');
+}
+
+function _sanitizeData(data) {
+  if (!data) {
+    return ""
+  }
+
+  if ("string" === typeof data) {
+    return data
+  }
+
+  if (Array.isArray(data)) {
+    return data.map(item => _sanitizeData(item))
+  }
+
+  if ("object" !== typeof data) {
+    return data
+  }
+
+  var newData = {}
+  for (const key in data) {
+    newData[_sanitizeKey(key)] = _sanitizeData(data[key])
+  }
+  return newData
+}
+
+function _wordpressImportPostTransforms(meta, data) {
+  var wordpress = []
+  data.rss.channel.item.forEach(item => {
+    var op = _sanitizeData(item)
+    var newLocation = {}
+    op.wp_postmeta.map(meta => { op[meta.wp_meta_key] = meta.wp_meta_value })
+    delete op.wp_postmeta
+    if (op.location && "string" === typeof op.location) {
+      op.location = op.location.split(";").map(i => i.split(":").splice(-1, 1).join("/"))
+      op.location.pop()
+      op.location = op.location.map(i => i.replace(/[\"]/g, ''))
+      for (var i = 0; i < op.location.length; i = i+2) {
+        newLocation[op.location[i]] = op.location[i+1]
+      }
+    }
+    op = {
+      title: op.title,
+      date: op.pubDate,
+      timestamp: new Date(op.pubDate).getTime(),
+      location: Object.assign({
+        city: op.city,
+        country: op.country,
+        street: op.street_address
+      }, newLocation)
+    }
+    wordpress.push(Object.assign({}, meta, op))
+  })
+  return { wordpress }
+}
+
+function _loadXmlAsJsonFile(file) {
+  if (!fs.existsSync(file)) {
+    throw new Error('Wordpress export file does not exist')
+  }
+
+  const xml = fs.readFileSync(file, 'utf8')
+  return xml2json.toJson(xml, {
+    object: true,
+    coerce: true,
+    sanitize: true,
+    trim: true,
+    arrayNotation: false,
+    alternateTextNode: false
+  })
+}
+
+function _loadChunkArtifactAsXmlToJson(chunk, type, artifact) {
+  const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + ".xml")
+
+  if (!fs.existsSync(artifactFile)) {
+      return
+  }
+
+  return _loadXmlAsJsonFile(artifactFile)
+}
+
 function _loadChunkArtifactAsYaml(chunk, type, artifact) {
     const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + ".yaml")
-    
+
     if (!fs.existsSync(artifactFile)) {
         return
     }
 
     // Load all data as Yaml
     const data = yaml.safeLoad(fs.readFileSync(artifactFile, 'utf8'));
-            
+
     if (!data || Object.keys(data).length === 0) {
         return
     }
@@ -22,7 +107,7 @@ function _loadChunkArtifactAsYaml(chunk, type, artifact) {
 
 function _loadChunkArtifactAsFilePath(chunk, type, artifact, ext) {
     const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + "." + ext)
-    
+
     return (fs.existsSync(artifactFile) ? artifactFile : undefined)
 }
 
@@ -40,7 +125,7 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         if (!config[type] || config[type].length === 0) {
             // No artifacts defined
             return []
-        }        
+        }
 
         // Look up the artifacts dir
         const artifactsDir = path.resolve(process.cwd(), 'chunks', chunk, type)
@@ -71,9 +156,9 @@ function _findChunkArtifacts(chunk, type, artifacts) {
             const url = new URL(artifact, true)
             const path = url.hostname + url.pathname
             const name = url.hash.slice(1) || path
-            return { chunk, 
-                     name, 
-                     source: url.protocol.slice(0, -1), 
+            return { chunk,
+                     name,
+                     source: url.protocol.slice(0, -1),
                      dependencies,
                      path,
                      options: Object.assign({ priority: 99999 }, url.query )}
@@ -81,7 +166,7 @@ function _findChunkArtifacts(chunk, type, artifacts) {
 
     } catch (e) {
         return []
-    }   
+    }
 }
 
 function _loadChunkTransforms(chunk, transforms) {
@@ -89,14 +174,20 @@ function _loadChunkTransforms(chunk, transforms) {
 
     // Look up all valid transforms and load them up
     return all.map(transform => {
-        const data = _loadChunkArtifactAsYaml(chunk, "transforms", transform)
+        var data = _loadChunkArtifactAsYaml(chunk, "transforms", transform)
+        if (data.import && data.import.type === 'wordpress') {
+          var result = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
+          data = data.import
+          delete data.type
+          data = _wordpressImportPostTransforms(data, result)
+        }
         return Object.assign({}, transform, (data ? { data } : {}))
     })
 }
 
 function _loadChunkFunctions(chunk) {
     const functions = _findChunkArtifacts(chunk, "functions")
-    
+
     // Look up all valid transforms and load them up
     return functions.map(f => {
         const data = _loadChunkArtifactAsFilePath(chunk, "functions", f, "js")
@@ -118,9 +209,9 @@ function _load(chunks, loader, artifacts) {
             all = all.concat(data)
         }
     })
- 
+
     if (all.length === 0) {
-        return 
+        return
     }
 
     return all.sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
@@ -166,7 +257,7 @@ function loadSecureConfig() {
 
     // Look for the security file file
     const file = path.resolve(dir, '.chunky.json')
-    
+
     if (!fs.existsSync(file)) {
         // We can't continue without this file
         throw new Error('The Chunky security file is missing')
