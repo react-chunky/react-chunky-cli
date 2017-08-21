@@ -37,8 +37,19 @@ function _wordpressImportPostTransforms(meta, data) {
   data.rss.channel.item.forEach(item => {
     var op = _sanitizeData(item)
     var newLocation = {}
-    op.wp_postmeta.map(meta => { op[meta.wp_meta_key] = meta.wp_meta_value })
-    delete op.wp_postmeta
+    var post = {}
+    var categories = []
+    var comments = []
+
+    if (op.wp_postmeta) {
+      if (Array.isArray(op.wp_postmeta)) {
+        op.wp_postmeta.map(meta => { op[meta.wp_meta_key] = meta.wp_meta_value })
+      } else if ("object" === typeof op.wp_postmeta) {
+        op = Object.assign({}, op, op.wp_postmeta)
+      }
+      delete op.wp_postmeta
+    }
+
     if (op.location && "string" === typeof op.location) {
       op.location = op.location.split(";").map(i => i.split(":").splice(-1, 1).join("/"))
       op.location.pop()
@@ -47,16 +58,41 @@ function _wordpressImportPostTransforms(meta, data) {
         newLocation[op.location[i]] = op.location[i+1]
       }
     }
-    op = {
+
+    if (op.city) {
+      newLocation = Object.assign({}, newLocation,
+                    op.city ? { city: op.city } : {},
+                    op.country ? { country: op.country } : {},
+                    op.street_address ? { street: op.street_address } : {})
+    }
+
+    if (op.category && Array.isArray(op.category)) {
+      categories = op.category.map(c => c._t)
+    }
+
+    if (op.wp_comment && Array.isArray(op.wp_comment)) {
+      comments = op.wp_comment.map(c => Object.assign({},
+        c.wp_comment_author ? { author: c.wp_comment_author } : {},
+        c.wp_comment_author_email ? { authorEmail: c.wp_comment_author_email } : {},
+        c.wp_comment_author_url ? { authorUrl: c.wp_comment_author_url } : {},
+        c.wp_comment_author_IP ? { authorIP: c.wp_comment_author_IP } : {},
+        c.wp_comment_date ? { date: c.wp_comment_date, timestamp: new Date(c.wp_comment_date).getTime() } : {},
+        c.wp_comment_content ? { content: c.wp_comment_content } : {},
+        c.wp_comment_approved ? { status: c.wp_comment_approved } : {}
+      ))
+    }
+
+    op = Object.assign({
       title: op.title,
       date: op.pubDate,
-      timestamp: new Date(op.pubDate).getTime(),
-      location: Object.assign({
-        city: op.city,
-        country: op.country,
-        street: op.street_address
-      }, newLocation)
-    }
+      timestamp: new Date(op.pubDate).getTime() },
+      newLocation, post,
+      op._thumbnail_id ? { thumbnailId: op._thumbnail_id } : {},
+      op.wp_post_id ? { postId: op.wp_post_id } : {},
+      op.wp_attachment_url ? { attachmentUrl: op.wp_attachment_url } : {},
+      categories.length > 0 ? { categories } : {},
+      comments.length > 0 ? { comments } : {})
+
     wordpress.push(Object.assign({}, meta, op))
   })
   return { wordpress }
@@ -68,14 +104,20 @@ function _loadXmlAsJsonFile(file) {
   }
 
   const xml = fs.readFileSync(file, 'utf8')
-  return xml2json.toJson(xml, {
-    object: true,
-    coerce: true,
-    sanitize: true,
-    trim: true,
-    arrayNotation: false,
-    alternateTextNode: false
-  })
+  try {
+    const json = xml2json.toJson(xml, {
+      object: true,
+      coerce: true,
+      sanitize: true,
+      trim: true,
+      arrayNotation: false,
+      alternateTextNode: false
+    })
+    return json
+  } catch (e) {
+    console.log(e)
+  }
+  return {}
 }
 
 function _loadChunkArtifactAsXmlToJson(chunk, type, artifact) {
@@ -176,9 +218,15 @@ function _loadChunkTransforms(chunk, transforms) {
     return all.map(transform => {
         var data = _loadChunkArtifactAsYaml(chunk, "transforms", transform)
         if (data.import && data.import.type === 'wordpress') {
-          var result = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
           data = data.import
           delete data.type
+          var result = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
+          if (data.join) {
+            for (const dependency in data.join) {
+              const dependencyContent = _loadChunkArtifactAsXmlToJson(chunk, "transforms", { name: dependency })
+            }
+            delete data.join
+          }
           data = _wordpressImportPostTransforms(data, result)
         }
         return Object.assign({}, transform, (data ? { data } : {}))
