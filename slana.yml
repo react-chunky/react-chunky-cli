@@ -73,7 +73,7 @@ commands:
 - name: transform [transforms..]
   description: Apply cloud transforms
   more: Specify one or more transforms or blank to apply all
-  executor: executors/transform  
+  executor: executors/transform
   options:
   - name: env
     description: The cloud environment to be transformed
@@ -116,7 +116,7 @@ commands:
     description: Reset only the users in the default dev cloud environment
   - command: reset users data --env production
     description: Reset the users and the data in the production cloud environment
-  
+
 - name: deploy [artifacts..]
   description: Deploy one or more product artifacts to the cloud
   more: The supported artifacts are functions and assets
@@ -149,11 +149,20 @@ commands:
     description: Deploy only the cloud functions from the auth chunk to the production cloud environment
   - command: deploy functions --remove
     description: Remove all the previously deployed functions from the default dev cloud environment
-  
-# - name: sync
-#   description: Sync cloud data
-#   executor: executors/run  
-#   options:
-#   - name: env
-#     description: The cloud environment to be affected
-#     type: string
+
+- name: package [platforms..]
+  description: Package the product for one or more platforms
+  more: The supported platforms are ios, android, web and site
+  executor: executors/package
+  options:
+  - name: optimize
+    description: Optimize the package
+    default: false
+    type: boolean
+  examples:
+  - command: package
+    description: Package the product for all the platforms
+  - command: package ios
+    description: Package the iOS app only
+  - command: package site android --optimize
+    description: Package the site and the Android app and optimize then

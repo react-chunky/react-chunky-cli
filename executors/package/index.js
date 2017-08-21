@@ -9,21 +9,30 @@ function parseCommand(command) {
         command.platforms = ["ios", "android", "web", "site"]
     }
 
+    coreutils.logger.header(`Packaging for ${command.platforms.join(", ")}`)
+    var chain = Promise.resolve()
+
     command.platforms.forEach(platform => {
         switch(platform) {
             case 'ios':
-                ios()
+                chain = chain.then(() => ios(command.optimize))
             break;
             case 'android':
-                android()
+                chain = chain.then(() => android(command.optimize))
             break;
             case 'web':
-                web(command.webPort)
+                chain = chain.then(() => web(command.optimize))
             break;
             case 'site':
-                site(command.sitePort)
+                chain = chain.then(() => site(command.optimize))
             break;
         }
+    })
+
+    chain.then(() => {
+      coreutils.logger.footer(`Successfully packaged`)
+    }).catch(e => {
+      coreutils.logger.error(e)
     })
 }
 
