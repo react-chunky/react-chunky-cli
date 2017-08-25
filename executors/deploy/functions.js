@@ -10,17 +10,17 @@ function prepareService(service, deployment) {
     if (!fs.existsSync(service.dir)) {
         fs.mkdirsSync(service.dir)
     }
-    
+
     // Get a manifest and package
     const manifest = generators.generateServerlessManifest(service, deployment)
     const package = generators.generateServerlessPackage(service, deployment)
 
     // Generate the manifest
-    fs.writeFileSync(path.resolve(service.dir, "serverless.json"), 
+    fs.writeFileSync(path.resolve(service.dir, "serverless.json"),
                      JSON.stringify(manifest, null, 2))
 
     // Generate the package
-    fs.writeFileSync(path.resolve(service.dir, "package.json"), 
+    fs.writeFileSync(path.resolve(service.dir, "package.json"),
                      JSON.stringify(package, null, 2))
 
     // Figure out the chunk location
@@ -29,7 +29,7 @@ function prepareService(service, deployment) {
 
     // Copy the chunk function and the chunk manifest over, along with global assets
     return cpy([
-        chunkDir + '/functions/*', 
+        chunkDir + '/functions/*',
         chunkDir + "/chunk.json",
         productDir + "/.chunky.json",
         productDir + "/chunky.json"
@@ -64,14 +64,14 @@ function batchServices(services, deployment) {
         var service = services[serviceName]
         service.name = serviceName
         service.dir = path.resolve(servicesDir, serviceName)
-        
+
         return deployService(service, deployment)
     }))
 }
 
-module.exports = function(deployment) {
-    const functions = loaders.loadFunctions(deployment.chunks)
-    
+module.exports = function(providers, deployment) {
+    const functions = loaders.loadFunctions(providers, deployment.chunks)
+
     if (!functions || Object.keys(functions).length === 0) {
         coreutils.logger.skip("Skipping - no functions to be deployed")
         return Promise.resolve().
@@ -79,14 +79,13 @@ module.exports = function(deployment) {
     }
 
     var services = {}
-    functions.forEach(f => {    
+    functions.forEach(f => {
         services[f.chunk] = services[f.chunk] || {}
         services[f.chunk].dependencies = Object.assign({}, services[f.chunk].dependencies || {}, f.dependencies)
         services[f.chunk].functions = services[f.chunk].functions || []
         services[f.chunk].functions.push(f)
     })
-    
+
     return batchServices(services, deployment).
            then(() => coreutils.logger.done())
 }
-   

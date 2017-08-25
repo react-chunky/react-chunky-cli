@@ -2,9 +2,9 @@ const coreutils = require('coreutils')
 const path = require('path')
 const fs = require('fs-extra')
 
-module.exports = function(deployment) {
+module.exports = function(providers, deployment) {
     coreutils.logger.info("Deploying assets ...")
-    
+
     // Prepare the raw path
     const assetsPath = path.resolve(deployment.dir, 'assets')
     if (!fs.existsSync(assetsPath)) {

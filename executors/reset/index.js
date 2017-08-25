@@ -3,14 +3,13 @@ const loaders = require('../../src/loaders')
 const providers = require('../../src/providers')
 const users = require('./users')
 const data = require('./data')
-const firebase = require("firebase-admin")
 
-function resetChain(index) {
+function resetChain(providers, index) {
     // If we want to reset the users layer, let's do that first
-    var chain = (index.users ? users(firebase) : Promise.resolve())
+    var chain = (index.users ? users(providers.firebase.api) : Promise.resolve())
 
     // If we've got a data layer to reset, let's do that next
-    return (index.data ? chain.then(() => data(firebase)) : chain)
+    return (index.data ? chain.then(() => data(providers.firebase.api)) : chain)
 }
 
 function parseCommand(command) {
@@ -32,10 +31,10 @@ function parseCommand(command) {
 
     providers.authenticate(config).
 
-    then((auth) => {
+    then((providers) => {
       var index = {}
       command.layers.map(layer => (index[layer] = true))
-      return resetChain(index)
+      return resetChain(providers, index)
     }).
 
     then(() => {

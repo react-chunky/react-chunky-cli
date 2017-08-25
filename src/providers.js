@@ -16,7 +16,10 @@ function authenticateFirebase(config) {
     })
 
     coreutils.logger.ok(`Connected to Firebase`)
-    resolve({ name: 'firebase', provider: firebase })
+    resolve({ name: 'firebase', provider: {
+      api: firebase,
+      options: config.google
+    }})
   })
 }
 
@@ -36,7 +39,10 @@ function authenticateGoogle(config) {
       }
 
       coreutils.logger.ok(`Connected to Google`)
-      resolve({ name: 'google', provider: google })
+      resolve({ name: 'google', provider: {
+        api: google,
+        options: config.google
+      }})
     })
   })
 }
@@ -54,7 +60,10 @@ function authenticateAWS(config) {
     process.env.AWS_DEFAULT_REGION=config.aws.region
 
     coreutils.logger.ok(`Connected to AWS`)
-    resolve({ name: 'aws', provider: aws })
+    resolve({ name: 'aws', provider: {
+      api: aws,
+      options: config.aws
+    }})
   })
 }
 

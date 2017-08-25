@@ -6,12 +6,12 @@ const functions = require('./functions')
 const path = require('path')
 const fs = require('fs-extra')
 
-function initialize(config, command) {
+function initialize(providers, command) {
     // Prepare the deploy path
     const id = coreutils.string.uuid()
     const date = new Date()
     const timestamp = date.getTime()
-    const apiDomain = config.aws.apiDomain
+    const apiDomain = providers.aws.options.apiDomain
 
     const deployPath = path.resolve(process.cwd(), '.chunky', 'deployments', id)
     if (!fs.existsSync(deployPath)) {
@@ -33,12 +33,12 @@ function initialize(config, command) {
     return Object.assign({ dir: deployPath }, fingerprint)
 }
 
-function deployChain(index, deployment) {
+function deployChain(providers, index, deployment) {
     // If we want to deploy the assets, let's do that first
-    var chain = (index.assets ? assets(deployment) : Promise.resolve())
+    var chain = (index.assets ? assets(providers, deployment) : Promise.resolve())
 
     // If we've got functions to deploy, let's do that next
-    return (index.functions ? chain.then(() => functions(deployment)) : chain)
+    return (index.functions ? chain.then(() => functions(providers, deployment)) : chain)
 }
 
 function parseCommand(command) {
@@ -68,12 +68,12 @@ function parseCommand(command) {
 
     then(providers => {
       // Setup a new deployment
-      const deployment = initialize(config, command)
+      const deployment = initialize(providers, command)
 
       var index = {}
       command.artifacts.forEach(artifact => (index[artifact] = true))
 
-      return deployChain(index, deployment)
+      return deployChain(providers, index, deployment)
     }).
 
     then(() => {
