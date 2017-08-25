@@ -1,20 +1,12 @@
 const coreutils = require('coreutils')
 const loaders = require('../../src/loaders')
+const providers = require('../../src/providers')
 const assets = require('./assets')
 const functions = require('./functions')
 const path = require('path')
 const fs = require('fs-extra')
 
 function initialize(config, command) {
-    if (!config.aws || !config.aws) {
-        throw new Error('Invalid AWS secure configuration')
-    }
-
-    // Let's get ready to use AWS
-    process.env.AWS_ACCESS_KEY_ID=config.aws.key
-    process.env.AWS_SECRET_ACCESS_KEY=config.aws.secret
-    process.env.AWS_DEFAULT_REGION=config.aws.region
-
     // Prepare the deploy path
     const id = coreutils.string.uuid()
     const date = new Date()
@@ -27,13 +19,13 @@ function initialize(config, command) {
     }
 
     // Create a fingerprint
-    const fingerprint = { 
-        id, 
-        date, 
-        timestamp, 
+    const fingerprint = {
+        id,
+        date,
+        timestamp,
         apiDomain,
-        remove: command.remove, 
-        env: command.env, 
+        remove: command.remove,
+        env: command.env,
         chunks: command.chunks.filter(c => c),
     }
     fs.writeFileSync(path.resolve(deployPath, 'fingerprint.json'), JSON.stringify(fingerprint, null, 2))
@@ -51,7 +43,7 @@ function deployChain(index, deployment) {
 
 function parseCommand(command) {
     var config = loaders.loadSecureConfig()
- 
+
      if (!config || !config.cloud[command.env]) {
         throw new Error(`Invalid secure cloud configuration or invalid cloud environment ${command.env}`)
     }
@@ -70,20 +62,28 @@ function parseCommand(command) {
         process.exit(0)
     }
 
-    // Setup a new deployment
-    const deployment = initialize(config, command)
-
-    var index = {}
-    command.artifacts.forEach(artifact => (index[artifact] = true))
-
     coreutils.logger.header(`Starting new deployment to the ${command.env} cloud environment`)
 
-    deployChain(index, deployment).then(() => {
-        coreutils.logger.footer(`The ${command.env} cloud environment is now ready`)
-        process.exit(0)
-    }).catch(e => {
-        coreutils.logger.error(e)
-        process.exit(1)
+    providers.authenticate(config).
+
+    then(providers => {
+      // Setup a new deployment
+      const deployment = initialize(config, command)
+
+      var index = {}
+      command.artifacts.forEach(artifact => (index[artifact] = true))
+
+      return deployChain(index, deployment)
+    }).
+
+    then(() => {
+      coreutils.logger.footer(`The ${command.env} cloud environment is now ready`)
+      process.exit(0)
+    }).
+
+    catch(e => {
+      coreutils.logger.error(e)
+      process.exit(1)
     })
 }
 

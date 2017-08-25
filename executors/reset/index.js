@@ -1,19 +1,9 @@
 const coreutils = require('coreutils')
 const loaders = require('../../src/loaders')
+const providers = require('../../src/providers')
 const users = require('./users')
 const data = require('./data')
 const firebase = require("firebase-admin")
-
-function initialize(config) {
-    if (!config.firebase || !config.firebase.serviceAccount) {
-        throw new Error('Invalid Firebase secure configuration')
-    }
-
-    firebase.initializeApp({
-        credential: firebase.credential.cert(config.firebase.serviceAccount),
-        databaseURL: "https://" + config.firebase.serviceAccount.project_id + ".firebaseio.com"
-    })
-}
 
 function resetChain(index) {
     // If we want to reset the users layer, let's do that first
@@ -25,7 +15,7 @@ function resetChain(index) {
 
 function parseCommand(command) {
     var config = loaders.loadSecureConfig()
- 
+
      if (!config || !config.cloud[command.env]) {
         throw new Error(`Invalid secure cloud configuration or invalid cloud environment ${command.env}`)
     }
@@ -38,19 +28,24 @@ function parseCommand(command) {
         command.layers = ["users", "data"]
     }
 
-    initialize(config)
-
-    var index = {}
-    command.layers.map(layer => (index[layer] = true))
-
     coreutils.logger.header(`Resetting the ${command.env} cloud environment`)
 
-    resetChain(index).then(() => {
-        coreutils.logger.footer(`The ${command.env} cloud environment is now reset`)
-        process.exit(0)
-    }).catch(e => {
-        coreutils.logger.error(e)
-        process.exit(1)
+    providers.authenticate(config).
+
+    then((auth) => {
+      var index = {}
+      command.layers.map(layer => (index[layer] = true))
+      return resetChain(index)
+    }).
+
+    then(() => {
+      coreutils.logger.footer(`The ${command.env} cloud environment is now reset`)
+      process.exit(0)
+    }).
+
+    catch(e => {
+      coreutils.logger.error(e)
+      process.exit(1)
     })
 }
 

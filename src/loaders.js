@@ -117,23 +117,24 @@ function _findChunkArtifacts(chunk, type, artifacts) {
     }
 }
 
-function _loadChunkTransforms(chunk, transforms) {
+function _loadChunkTransforms(providers, chunk, transforms) {
     const all = _findChunkArtifacts(chunk, "transforms", transforms)
 
     // Look up all valid transforms and load them up
     return all.map(transform => {
         var data = _loadChunkArtifactAsYaml(chunk, "transforms", transform)
-        if (data.import && data.import.type === 'wordpress') {
+        if (data.import) {
           data = data.import
+          const type = data.type
           delete data.type
-          var result = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
-          data = parsers.parseWordpressPostsAsTransforms(data, result)
+          var local = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
+          data = parsers.parseImportAsTransforms({ type, data, local, providers })
         }
         return Object.assign({}, transform, (data ? { data } : {}))
     })
 }
 
-function _loadChunkFunctions(chunk) {
+function _loadChunkFunctions(providers, chunk) {
     const functions = _findChunkArtifacts(chunk, "functions")
 
     // Look up all valid transforms and load them up
@@ -143,7 +144,7 @@ function _loadChunkFunctions(chunk) {
     })
 }
 
-function _load(chunks, loader, artifacts) {
+function _load(providers, chunks, loader, artifacts) {
     // Figure out the chunks we need to look into
     if (chunks.length === 0) {
         chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js'))
@@ -151,7 +152,7 @@ function _load(chunks, loader, artifacts) {
 
     var all = []
     chunks.forEach(chunk => {
-        const data = loader(chunk, artifacts)
+        const data = loader(providers, chunk, artifacts)
 
         if (data && data.length > 0) {
             all = all.concat(data)
@@ -165,12 +166,12 @@ function _load(chunks, loader, artifacts) {
     return all.sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 }
 
-function loadTransforms(chunks, transforms) {
-    return _load(chunks, _loadChunkTransforms, transforms)
+function loadTransforms(providers, chunks, transforms) {
+    return _load(providers, chunks, _loadChunkTransforms, transforms)
 }
 
-function loadFunctions(chunks) {
-    return _load(chunks, _loadChunkFunctions)
+function loadFunctions(providers, chunks) {
+    return _load(providers, chunks, _loadChunkFunctions)
 }
 
 function loadChunkConfig(chunk) {

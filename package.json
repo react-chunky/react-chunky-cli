@@ -1,6 +1,6 @@
 {
   "name": "react-chunky-cli",
-  "version": "0.8.11",
+  "version": "0.8.12",
   "description": "The Chunky CLI",
   "preferGlobal": true,
   "repository": {
@@ -27,6 +27,7 @@
     "firebase": "^4.1.3",
     "firebase-admin": "^5.1.0",
     "firebaseline": "0.x",
+    "googleapis": "^21.2.0",
     "js-yaml": "^3.9.0",
     "lali": "0.x",
     "lodash": "^4.17.4",
