@@ -16,22 +16,30 @@ function parseCommand(command) {
     coreutils.logger.header(`Transforming the ${command.env} cloud environment`)
 
     // Start by authenticating
-    providers.authenticate(config).then((providers) => {
-      // First, load the transforms we care about
-      const transforms = loaders.loadTransforms(providers, command.chunks ? command.chunks.filter(c => c) : [], command.transforms)
+    providers.authenticate(config).
 
+    // First, load the transforms we care about
+    then((providers) =>
+      loaders.loadTransforms(providers, command.chunks ? command.chunks.filter(c => c) : [], command.transforms).
+             then(transforms => ({ transforms, providers }))).
+
+    then(({ transforms, providers }) => {
       if (!transforms) {
           coreutils.logger.skip(`Skipping - no transforms to be applied`)
           return
       }
-
       // Next, apply them
-      return apply(providers, transforms)
-    }).then(() => {
-      coreutils.logger.footer(`Successfully transformed the ${command.env} cloud environment`)
+      return apply(providers, transforms).then(() => {
+        coreutils.logger.footer(`Successfully transformed the ${command.env} cloud environment`)
+      })
+    }).
+
+    then(() => {
       process.exit(0)
-    }).catch(e => {
-      console.log(e)
+    }).
+
+    catch(e => {
+        console.log(e)
         throw e
     })
 }

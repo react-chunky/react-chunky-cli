@@ -41,7 +41,8 @@ function authenticateGoogle(config) {
       coreutils.logger.ok(`Connected to Google`)
       resolve({ name: 'google', provider: {
         api: google,
-        options: config.google
+        options: config.google,
+        auth: googleAuth
       }})
     })
   })

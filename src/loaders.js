@@ -121,27 +121,31 @@ function _loadChunkTransforms(providers, chunk, transforms) {
     const all = _findChunkArtifacts(chunk, "transforms", transforms)
 
     // Look up all valid transforms and load them up
-    return all.map(transform => {
+    return Promise.all(all.map(transform => {
         var data = _loadChunkArtifactAsYaml(chunk, "transforms", transform)
+
         if (data.import) {
           data = data.import
           const type = data.type
           delete data.type
           var local = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
-          data = parsers.parseImportAsTransforms({ type, data, local, providers })
+          return parsers.parseImportAsTransforms({ type, data, local, providers }).
+                then(d => Object.assign({}, transform, (d ? { data: d } : {})))
         }
-        return Object.assign({}, transform, (data ? { data } : {}))
-    })
+
+        data = Object.assign({}, transform, (data ? { data } : {}))
+        return Promise.resolve(data)
+    }))
 }
 
 function _loadChunkFunctions(providers, chunk) {
     const functions = _findChunkArtifacts(chunk, "functions")
 
     // Look up all valid transforms and load them up
-    return functions.map(f => {
+    return Promise.resolve(functions.map(f => {
         const data = _loadChunkArtifactAsFilePath(chunk, "functions", f, "js")
         return Object.assign({}, f, (data ? { data } : {}))
-    })
+    }))
 }
 
 function _load(providers, chunks, loader, artifacts) {
@@ -150,20 +154,13 @@ function _load(providers, chunks, loader, artifacts) {
         chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js'))
     }
 
-    var all = []
-    chunks.forEach(chunk => {
-        const data = loader(providers, chunk, artifacts)
+    return Promise.all(chunks.map(chunk => loader(providers, chunk, artifacts))).
 
-        if (data && data.length > 0) {
-            all = all.concat(data)
-        }
+    then(all => {
+      var merged = []
+      all.map(a => { merged = merged.concat(a) })
+      return merged.sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
     })
-
-    if (all.length === 0) {
-        return
-    }
-
-    return all.sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 }
 
 function loadTransforms(providers, chunks, transforms) {
