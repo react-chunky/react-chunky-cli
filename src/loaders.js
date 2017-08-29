@@ -78,6 +78,7 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         // Look up the artifacts dir
         const artifactsDir = path.resolve(process.cwd(), 'chunks', chunk, type)
 
+
         if (!fs.existsSync(artifactsDir)) {
             // This chunk has no artifacts, even if it declared some
             return []
@@ -113,6 +114,7 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         }).sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 
     } catch (e) {
+        console.log(e)
         return []
     }
 }

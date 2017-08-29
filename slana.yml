@@ -117,6 +117,25 @@ commands:
   - command: reset users data --env production
     description: Reset the users and the data in the production cloud environment
 
+- name: new [artifacts..]
+  description: Create one or more local artifact
+  more: The supported artifacts are chunk and function
+  executor: executors/new
+  options:
+  - name: name
+    description: The name of the new artifact
+    default: artifact
+    type: string
+  - name: template
+    description: The template to create the artifact from
+    default: book
+    type: string
+  examples:
+  - command: new chunk --name friends
+    description: Create a new chunk named "friends"
+  - command: new function --name friends/invite
+    description: Create an "invite" function in the "friends" chunk
+
 - name: deploy [artifacts..]
   description: Deploy one or more product artifacts to the cloud
   more: The supported artifacts are functions and assets

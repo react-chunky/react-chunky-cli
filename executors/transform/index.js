@@ -28,6 +28,7 @@ function parseCommand(command) {
           coreutils.logger.skip(`Skipping - no transforms to be applied`)
           return
       }
+
       // Next, apply them
       return apply(providers, transforms).then(() => {
         coreutils.logger.footer(`Successfully transformed the ${command.env} cloud environment`)

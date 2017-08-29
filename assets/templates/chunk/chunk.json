@@ -1,6 +1,0 @@
-{
-  <% if (template) { %>
-  "extends": "<%= template %>",
-  <% } %>
-  "name": "<%= name %>"
-}
