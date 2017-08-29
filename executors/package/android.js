@@ -10,6 +10,5 @@ module.exports = function(optimize) {
               '--assets-dest', 'android/app/src/main/res/',
               '--bundle-output', 'android/app/src/main/assets/index.android.bundle']).
           then(() =>  process.chdir('android')).
-          then(() =>  coreutils.run.async('./gradlew', ['assembleRelease'])).
-          then(() =>  coreutils.run.async('./gradlew', ['installRelease']))
+          then(() =>  coreutils.run.async('./gradlew', ['assembleRelease']))
 }
