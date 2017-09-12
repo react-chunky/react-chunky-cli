@@ -1,6 +1,6 @@
 {
   "name": "react-chunky-cli",
-  "version": "0.8.15",
+  "version": "0.8.17",
   "description": "The Chunky CLI",
   "preferGlobal": true,
   "repository": {
@@ -32,7 +32,9 @@
     "lali": "0.x",
     "lodash": "^4.17.4",
     "minimist": "^1.2.0",
+    "opn": "^5.1.0",
     "os": "^0.1.1",
+    "react-chunky-engine": "^0.1.0",
     "recursive-readdir": "^2.2.1",
     "serverless": "^1.18.1",
     "slana": "^0.x",

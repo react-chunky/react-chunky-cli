@@ -10,7 +10,7 @@ commands:
   options:
   - name: template
     description: The product template to use
-    default: starter
+    default: default
     type: string
   examples:
   - command: init MyProduct
@@ -128,7 +128,7 @@ commands:
     type: string
   - name: template
     description: The template to create the artifact from
-    default: book
+    default: default
     type: string
   examples:
   - command: new chunk --name friends

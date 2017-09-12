@@ -1,7 +1,4 @@
 {
-  <% if (template) { %>
-  "extends": "<%= template %>",
-  <% } %>
   "name": "<%= name %>",
   "routes": {
     "chapters": {
@@ -26,5 +23,5 @@
     }
   },
   "transitions": ["push://entries", "push://entry"],
-  "transforms": ["firebase://seed?priority=75", "firebase://extra?priority=85"]
+  "transforms": ["firebase://seed?priority=75"]
 }

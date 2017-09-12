@@ -114,7 +114,6 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         }).sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 
     } catch (e) {
-        console.log(e)
         return []
     }
 }

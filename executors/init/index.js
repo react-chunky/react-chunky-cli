@@ -1,12 +1,12 @@
 const coreutils = require('coreutils')
-const create = require('./create')
+const product = require('./product')
 
 function parseCommand(command) {
     if (!command.name) {
         command.name = "MyChunkyProduct"
     }
-    
-    create(command.name, command.template) 
+
+    product.create(command.name, command.template)
 }
 
 module.exports = function(command) {
