@@ -25,16 +25,9 @@ export default class MainAccountScreen extends ListScreen {
         title: "",
         data: [
           { id: "header" },
-          { title: "Change Language", id: "language", icon: "language" },
           { title: "Edit Your Details", icon: "border-color" },
           { title: "Update Your Profile Picture", icon: "photo-camera" },
           { title: "Change Your Password", icon: "lock-outline" }]
-      },
-      section2: {
-        title: "Support 40 Days For Life",
-        data: [
-          { id: "donate", title: "Make A Donation", icon: "card-giftcard" },
-          { id: "shop", title: "Shop Online", icon: "shopping-cart" }]
       },
       section3: {
         title: "Get In Touch",
