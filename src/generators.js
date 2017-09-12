@@ -109,6 +109,7 @@ function _generateProductChunkyManifest(name, template) {
     name,
     template,
     id: "io.chunky",
+    androidSdkDir: "~/Library/Android/sdk",
     sections: {
       start: {
         stack: [ "auth" ],
@@ -372,8 +373,7 @@ function _generateArtifact(name, template, type, data) {
     }
 
     if (fs.existsSync(targetDir)) {
-        // We cannot duplicate names
-        throw new Error(`Cannot regenerate ${type}`)
+        fs.removeSync(targetDir)
     }
 
     if (!fs.existsSync(config.templatesDir)) {
