@@ -24,7 +24,7 @@ function parseCommand(command) {
              then(transforms => ({ transforms, providers }))).
 
     then(({ transforms, providers }) => {
-      if (!transforms) {
+      if (!transforms || transforms.length === 0) {
           coreutils.logger.skip(`Skipping - no transforms to be applied`)
           return
       }

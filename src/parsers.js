@@ -75,32 +75,33 @@ function _parseGoogleDataAsTransforms(data, google) {
   const drive = google.api.drive({ version: 'v3', auth: google.auth })
 
   return new Promise((resolve, reject) => {
-    const fileId = '11uE1hggMQZLBBQgUlKHq4iijT-WCDBV5ijb00kzXJFA'
-    const localPath = path.resolve(process.cwd(), '.chunky', 'google', 'files', `${fileId}.docx`)
-
-    // if (!fs.existsSync(localPath)) {
-    //   fs.mkdirsSync(localPath)
-    // }
-
-    // Generate the manifest
-    fs.writeFileSync(localPath, "")
-
-    const dest = fs.createWriteStream(localPath)
-
-    drive.files.export({
-       fileId: fileId,
-       alt: 'media',
-       mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
-    })
-    .on('end', function() {
-      console.log('Done');
-      resolve({})
-    })
-    .on('error', function(err) {
-      console.log('Error during download', err);
-      resolve({})
-    })
-    .pipe(dest)
+    // // const fileId = ''
+    // // const localPath = path.resolve(process.cwd(), '.chunky', 'google', 'files', `${fileId}.docx`)
+    //
+    // // if (!fs.existsSync(localPath)) {
+    // //   fs.mkdirsSync(localPath)
+    // // }
+    //
+    // // Generate the manifest
+    // fs.writeFileSync(localPath, "")
+    //
+    // const dest = fs.createWriteStream(localPath)
+    //
+    // drive.files.export({
+    //    fileId: fileId,
+    //    alt: 'media',
+    //    mimeType: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+    // })
+    // .on('end', function() {
+    //   console.log('Done');
+    //   resolve({})
+    // })
+    // .on('error', function(err) {
+    //   console.log('Error during download', err);
+    //   resolve({})
+    // })
+    // .pipe(dest)
+    resolve()
   })
 }
 
