@@ -43,6 +43,15 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/markdown-it/8.3.1/markdown-it.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.20.2/TweenMax.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/signup-forms/popup/embed.js" data-dojo-config="usePlainJson: true, isDebug: false"></script>
+    <script type="text/javascript">
+        function showMailchimpDialog(uuid, lid) {
+          require(["mojo/signup-forms/Loader"], function(L) {
+            L.start({"baseUrl":"mc.us15.list-manage.com","uuid":uuid,"lid":lid})
+          })
+          document.cookie = "MCPopupClosed=; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+        };
+    </script>
     <script src="/chunky.js"></script>
   </body>
 </html>

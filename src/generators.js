@@ -126,7 +126,11 @@ function _generateProductChunkyManifest(name, template) {
       statusBarLight: false,
       navigationColor: "#607D8B",
       navigationTintColor: "#37474F",
-      backgroundColor: "#FAFAFA"
+      backgroundColor: "#FAFAFA",
+      mailchimp: {
+        uuid: "",
+        lid:""
+      }
     }
   }
 }
@@ -136,6 +140,10 @@ function _generateProductStrings(data) {
    "appName": data.chunky.name,
    "noData": "Sorry, no data available",
    "inProgress": "Loading data ...",
+   "welcomeTitle": `Welcome To ${data.chunky.name}.`,
+   "welcomeSubtitle": "We're working hard to launch soon.",
+   "welcomeActionTitle": `Join ${data.chunky.name}`,
+   "welcomeActionSubtitle": "Stay Tuned.",
    "retry": "Try again",
    "cancel": "Cancel",
    "reload": "Reload",
