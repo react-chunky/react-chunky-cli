@@ -79,6 +79,7 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         const artifactsDir = path.resolve(process.cwd(), 'chunks', chunk, type)
 
 
+
         if (!fs.existsSync(artifactsDir)) {
             // This chunk has no artifacts, even if it declared some
             return []
@@ -144,17 +145,16 @@ function _loadChunkFunctions(providers, chunk) {
 
     // Look up all valid transforms and load them up
     return Promise.resolve(functions.map(f => {
-        const data = _loadChunkArtifactAsFilePath(chunk, "functions", f, "js")
-        return Object.assign({}, f, (data ? { data } : {}))
+      const data = _loadChunkArtifactAsFilePath(chunk, "functions", f, "js")
+      return Object.assign({}, f, (data ? { data } : {}))
     }))
 }
 
 function _load(providers, chunks, loader, artifacts) {
     // Figure out the chunks we need to look into
     if (chunks.length === 0) {
-        chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js'))
+        chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js' && dir !== '.DS_Store'))
     }
-
     return Promise.all(chunks.map(chunk => loader(providers, chunk, artifacts))).
 
     then(all => {

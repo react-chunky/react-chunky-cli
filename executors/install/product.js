@@ -5,13 +5,13 @@ const fs = require('fs-extra')
 const generators = require('../../src/generators')
 
 function update(name, template, data) {
-  return Promise.all([generators.generateChunk('auth', 'auth', Object.assign({}, data, { name: 'auth'})),
-                      generators.generateChunk('feed', 'feed', Object.assign({}, data, { name: 'feed'})),
-                      generators.generateChunk('account', 'account', Object.assign({}, data, { name: 'account'}))]).
-                  then(() => generators.generateiOS(name, template, data)).
-                  then(() => generators.generateAndroid(name, template, data)).
-                  then(() => generators.generateAssets(name, template, data)).
-                  then(() => generators.generateProvisioning(name, template, data)).catch(e => console.log(e))
+    return Promise.all([generators.generateChunk('intro', 'intro', Object.assign({}, data, { name: 'intro'}))]).
+                    then(() => generators.generateiOS(name, template, data)).
+                    then(() => generators.generateAndroid(name, template, data)).
+                    then(() => generators.generateWeb(name, template, data)).
+                    then(() => generators.generateAssets(name, template, data)).
+                    then(() => generators.generateProvisioning(name, template, data)).
+                    catch(e => coreutils.logger.fail(e.message))
 }
 
 function install() {

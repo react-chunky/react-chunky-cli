@@ -6,11 +6,12 @@ const fs = require("fs-extra")
 const ejs = require("ejs")
 const cpy = require("cpy")
 const recursive = require("recursive-readdir")
+const decompress = require("decompress")
 
 const config = {
-    templatesDir: path.resolve(__dirname, '../assets', 'templates'),
-    templatesIgnores: ['.DS_Store', '*.jar', '*.zip', '*.png', '*.jpg', '*.jpeg', '*.gif', '*.ttf', 'Pods'],
-    assetsTypes: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.zip', '**/*.jar', '**/*.ttf', '!.DS_Store']
+  templatesDir: path.resolve(__dirname, '../assets', 'templates'),
+  templatesIgnores: ['.DS_Store', '*.jar', '*.zip', '*.png', '*.jpg', '*.jpeg', '*.gif', '*.ttf', 'Pods', 'Pods.zip'],
+  assetsTypes: ['**/*.png', '**/*.jpg', '**/*.jpeg', '**/*.gif', '**/*.zip', '**/*.jar', '**/*.ttf', '!.DS_Store', 'Pods.zip']
 }
 
 function generateServerlessPackage(service, deployment) {
@@ -99,7 +100,8 @@ function _generateProductPackage(name, template) {
       "react-chunky-list-chunk": "0.x"
     },
     devDependencies: {
-      "react-native-savor": "0.x"
+      "react-native-savor": "0.x",
+      "react-savor": "0.x"
     }
   }
 }
@@ -112,18 +114,14 @@ function _generateProductChunkyManifest(name, template) {
     androidSdkDir: "~/Library/Android/sdk",
     sections: {
       start: {
-        stack: [ "auth" ],
+        stack: [ "intro" ],
         hideHeader: true
-      },
-      dashboard: {
-        stack: [ "feed", "account" ],
-        layout: "tabs"
       }
     },
-    transitions: ["replace://dashboard", "replace://start"],
+    transitions: ["replace://start"],
     provisioning: {},
     theme: {
-      progressColor: "rgba(50,50,50, 0.9)",
+      progressColor: "rgba(50,50,50,0.9)",
       primaryColor: "#43A047",
       statusBarLight: false,
       navigationColor: "#607D8B",
@@ -240,7 +238,39 @@ function _postCreationiOSProcess(data) {
   }
 
   fs.copySync(sourceFirebaseFile, targetFirebaseFile)
+  fs.copySync(sourceFirebaseFile, targetFirebaseFile)
+
   coreutils.logger.ok(`Provisioned iOS app for Firebase`)
+
+  const targetAssetsDir = path.resolve(process.cwd(), 'ios', 'assets')
+  fs.mkdirsSync(targetAssetsDir)
+
+  const targetPodsZipFile = path.resolve(process.cwd(), 'ios', 'Pods.zip')
+  const targetPodsDir = path.resolve(process.cwd(), 'ios')
+
+  if (!fs.existsSync(targetPodsZipFile)) {
+    // No need to decompress iOS Pods
+    return Promise.resolve()
+  }
+
+  return decompress(targetPodsZipFile, targetPodsDir).
+         then(files => {
+           fs.removeSync(targetPodsZipFile)
+           coreutils.logger.ok(`Decompressed iOS Pods`)
+         }).
+         catch(e => coreutils.logger.fail(e.message))
+}
+
+function _postCreationWebProcess(data) {
+  const sourceFirebaseFile = path.resolve(process.cwd(), 'firebase-config.json')
+  const targetFirebaseFile = path.resolve(process.cwd(), 'web', 'firebase-config.json')
+
+  if (!fs.existsSync(sourceFirebaseFile)) {
+    return Promise.resolve()
+  }
+
+  fs.copySync(sourceFirebaseFile, targetFirebaseFile)
+  coreutils.logger.ok(`Provisioned Web app for Firebase`)
 
   return Promise.resolve()
 }
@@ -318,7 +348,7 @@ function _copyTemplateAssetsToTarget(templateDir, targetDir) {
   return cpy(config.assetsTypes, targetDir, {
       cwd: templateDir,
       parents: true
-  }).catch(e => console.log(e))
+  }).catch(e =>coreutils.logger.fail(e.message))
 }
 
 function _generateChunkIndexFile(data) {
@@ -328,9 +358,11 @@ function _generateChunkIndexFile(data) {
     const chunks = fs.readdirSync(chunksDir).filter(dir => (dir && dir !== 'index.js' && dir !== '.DS_Store'))
 
     var chunksExports = chunks.map(chunk => `export { default as ${chunk} } from './${chunk}'`).join("\n")
+    var chunksExportsWeb = chunks.map(chunk => `export { default as ${chunk} } from './${chunk}/index.web'`).join("\n")
     var chunksExportsHeader = "// AUTO-GENERATED FILE. PLEASE DO NOT MODIFY. CHUNKY WILL CRY."
 
     fs.writeFileSync(path.resolve(chunksDir, "index.js"), `${chunksExportsHeader}\n\n${chunksExports}`)
+    fs.writeFileSync(path.resolve(chunksDir, "index.web.js"), `${chunksExportsHeader}\n\n${chunksExportsWeb}`)
     resolve()
   })
 }
@@ -346,6 +378,7 @@ function _postCreationProcess(type, data) {
     case "chunk":
       return _generateChunkIndexFile(data)
     case "web":
+      return _postCreationWebProcess(data)
     default:
       return Promise.resolve()
   }
@@ -401,6 +434,10 @@ function generateiOS(name, template, data) {
   return _generateArtifact(name, template, 'ios', data)
 }
 
+function generateWeb(name, template, data) {
+  return _generateArtifact(name, template, 'web', data)
+}
+
 function generateAssets(name, template, data) {
   return _generateArtifact(name, template, 'assets', data)
 }
@@ -428,6 +465,7 @@ module.exports = {
     generateChunk,
     generateAndroid,
     generateiOS,
+    generateWeb,
     generateAssets,
     generateProvisioning,
     generateProductManifestFiles

@@ -70,22 +70,23 @@ function batchServices(services, deployment) {
 }
 
 module.exports = function(providers, deployment) {
-    const functions = loaders.loadFunctions(providers, deployment.chunks)
+    return loaders.loadFunctions(providers, deployment.chunks).then(functions => {
+      if (!functions || Object.keys(functions).length === 0) {
+          coreutils.logger.skip("Skipping - no functions to be deployed")
+          return Promise.resolve().
+                 then(() => coreutils.logger.done())
+      }
 
-    if (!functions || Object.keys(functions).length === 0) {
-        coreutils.logger.skip("Skipping - no functions to be deployed")
-        return Promise.resolve().
-               then(() => coreutils.logger.done())
-    }
+      var services = {}
+      functions.forEach(f => {
+          services[f.chunk] = services[f.chunk] || {}
+          services[f.chunk].dependencies = Object.assign({}, services[f.chunk].dependencies || {}, f.dependencies)
+          services[f.chunk].functions = services[f.chunk].functions || []
+          services[f.chunk].functions.push(f)
+      })
 
-    var services = {}
-    functions.forEach(f => {
-        services[f.chunk] = services[f.chunk] || {}
-        services[f.chunk].dependencies = Object.assign({}, services[f.chunk].dependencies || {}, f.dependencies)
-        services[f.chunk].functions = services[f.chunk].functions || []
-        services[f.chunk].functions.push(f)
+      return batchServices(services, deployment).
+             then(() => coreutils.logger.done())
     })
 
-    return batchServices(services, deployment).
-           then(() => coreutils.logger.done())
 }

@@ -1,0 +1,9 @@
+{
+  "name": "intro",
+  "routes": {
+    "main": {
+      "title": "Welcome",
+      "icon": "event"
+    }
+  }
+}
