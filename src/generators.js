@@ -127,9 +127,66 @@ function _generateProductChunkyManifest(name, template) {
       navigationColor: "#607D8B",
       navigationTintColor: "#37474F",
       backgroundColor: "#FAFAFA",
+      footerTintColor: "#CFD8DC",
+      footerHeaderColor: "#90A4AE",
+      footerColor: "#546E7A",
       mailchimp: {
         uuid: "",
         lid:""
+      }
+    },
+    info: {
+      copyright: "© 2017.",
+      links: {
+        privacy: "/",
+        terms: "/"
+      }
+    },
+    web: {
+      footer: {
+        sections: [{
+          title: "About",
+          id: "about",
+          elements: [{
+            id: "story",
+            title: "Story",
+            link: "/"
+          }, {
+            id: "kit",
+            title: "Press Kit",
+            link: "/"
+          }, {
+            id: "contact",
+            title: "Contact",
+            link: "/"
+          }]
+        },
+         {
+          title: "Social",
+          id: "social",
+          elements: [{
+            id: "facebook",
+            title: "Facebook",
+            link: "/"
+          }, {
+            id: "twitter",
+            title: "Twitter",
+            link: "/"
+          }, {
+            id: "instagram",
+            title: "Instagram",
+            link: "/"
+          }]
+        }],
+        bottom: [{
+          id: "terms",
+          title: "Terms",
+          link: "/"
+        }, {
+          id: "privacy",
+          title: "Privacy",
+          link: "/"
+        }]
       }
     }
   }
