@@ -78,8 +78,6 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         // Look up the artifacts dir
         const artifactsDir = path.resolve(process.cwd(), 'chunks', chunk, type)
 
-
-
         if (!fs.existsSync(artifactsDir)) {
             // This chunk has no artifacts, even if it declared some
             return []
@@ -153,7 +151,7 @@ function _loadChunkFunctions(providers, chunk) {
 function _load(providers, chunks, loader, artifacts) {
     // Figure out the chunks we need to look into
     if (chunks.length === 0) {
-        chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js' && dir !== '.DS_Store'))
+        chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js' && dir !== 'index.web.js' && dir !== '.DS_Store'))
     }
     return Promise.all(chunks.map(chunk => loader(providers, chunk, artifacts))).
 
@@ -172,64 +170,65 @@ function loadFunctions(providers, chunks) {
     return _load(providers, chunks, _loadChunkFunctions)
 }
 
-function loadChunkConfig(chunk) {
-    // The chunk config file
-    const file = path.resolve(process.cwd(), "chunks", chunk, "chunk.json")
+function _loadJsonFile(filepath) {
+    // The project directory
+    const dir = path.resolve(process.cwd())
+
+    // Look for the file
+    const file = path.resolve(dir, filepath)
 
     if (!fs.existsSync(file)) {
         // We can't continue without this file
-        throw new Error('The chunk.json file is missing')
+        throw new Error('The file is missing')
     }
 
-    // Load the configuration
+    // Load the content
     var config = fs.readFileSync(file, 'utf8')
 
     if (!config) {
-        throw new Error('The chunky.json file is invalid')
+        throw new Error('The file is invalid')
     }
 
     // Parse the json content
     config = JSON.parse(config)
 
     if (!config) {
-        throw new Error('The chunky.json file is invalid')
+      throw new Error('The file is invalid')
     }
 
     return config
 }
 
+function loadMainConfig() {
+  const main = _loadJsonFile("chunky.json")
+  const web = _loadJsonFile("web/index.json")
+
+  return Object.assign({}, main, { web })
+}
+
+function loadChunkConfig(chunk) {
+  return _loadJsonFile(`chunks/${chunk}/chunk.json`)
+}
+
 function loadSecureConfig() {
-    // The project directory
-    const dir = path.resolve(process.cwd())
+  return _loadJsonFile(".chunky.json")
+}
 
-    // Look for the security file file
-    const file = path.resolve(dir, '.chunky.json')
+function loadChunkConfigs() {
+  const chunks = fs.readdirSync(path.resolve(process.cwd(), "chunks")).filter(dir => (dir && dir !== 'index.js' && dir !== 'index.web.js' && dir !== '.DS_Store'))
 
-    if (!fs.existsSync(file)) {
-        // We can't continue without this file
-        throw new Error('The Chunky security file is missing')
-    }
+  if (!chunks || chunks.length === 0) {
+    return
+  }
 
-    // Load the configuration
-    var secureConfig = fs.readFileSync(file, 'utf8')
-
-    if (!secureConfig) {
-        throw new Error('The Chunky security file is invalid')
-    }
-
-    // Parse the json content
-    secureConfig = JSON.parse(secureConfig)
-
-    if (!secureConfig) {
-        throw new Error('The Chunky security file is invalid')
-    }
-
-    return secureConfig
+  return chunks.map(chunk => loadChunkConfig(chunk))
 }
 
 module.exports = {
     loadSecureConfig,
+    loadMainConfig,
     loadChunkConfig,
     loadFunctions,
+    loadChunkConfigs,
     loadTransforms
 }
