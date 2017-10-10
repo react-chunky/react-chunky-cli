@@ -16,7 +16,7 @@ function parseCommand(command) {
                 web(command.webPackagerPort)
             break;
         }
-    })    
+    })
 }
 
 module.exports = function(command) {

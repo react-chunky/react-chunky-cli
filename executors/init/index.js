@@ -1,6 +1,9 @@
 const coreutils = require('coreutils')
 const product = require('./product')
 
+function setup () {
+}
+
 function parseCommand(command) {
     if (!command.name) {
         command.name = "MyChunkyProduct"

@@ -1,0 +1,30 @@
+{
+  "footer": {
+    "sections": [{
+      "title": "Social",
+      "id": "social",
+      "elements": [{
+        "id": "twitter",
+        "title": "Twitter",
+        "link": "http://twitter.com"
+      }, {
+        "id": "facebook",
+        "title": "Facebook",
+        "link": "http://facebook.com"
+      }, {
+        "id": "medium",
+        "title": "Medium",
+        "link": "http://medium.com"
+      }]
+    }],
+    "bottom": [{
+      "id": "terms",
+      "title": "Terms",
+      "link": "/"
+    }, {
+      "id": "privacy",
+      "title": "Privacy",
+      "link": "/"
+    }]
+  }
+}

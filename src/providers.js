@@ -1,4 +1,4 @@
-const firebase = require('firebase-admin')
+const firebase = require('./firebase')
 const google = require('googleapis')
 const coreutils = require('coreutils')
 const aws = require('aws-sdk')

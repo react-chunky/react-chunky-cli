@@ -40,7 +40,6 @@ function parseCommand(command) {
     }).
 
     catch(e => {
-        console.log(e)
         throw e
     })
 }
