@@ -79,6 +79,24 @@ commands:
   - command: run site
     description: Run the Site only
 
+- name: report [reports..]
+  description: Run cloud reports
+  more: Specify one or more reports or blank to apply all
+  executor: executors/report
+  options:
+  - name: env
+    description: The cloud environment to be used for reporting
+    type: string
+    default: dev
+  - name: chunks
+    description: One or more chunks to search for reports
+    type: array
+  examples:
+  - command: report
+    description: Run all reports from all chunks on the default dev cloud environment
+  - command: report --env staging
+    description: Run all reported from all chunks on the staging cloud environment
+
 - name: transform [transforms..]
   description: Apply cloud transforms
   more: Specify one or more transforms or blank to apply all

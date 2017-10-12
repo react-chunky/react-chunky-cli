@@ -113,8 +113,19 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         }).sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 
     } catch (e) {
+      console.log(e)
         return []
     }
+}
+
+function _loadChunkReports(providers, chunk, reports) {
+    const all = _findChunkArtifacts(chunk, "reports", reports)
+    // Look up all valid reports and load them up
+    return Promise.all(all.map(report => {
+        var data = _loadChunkArtifactAsYaml(chunk, "reports", report)
+        data = Object.assign({}, report, (data ? { data } : {}))
+        return Promise.resolve(data)
+    }))
 }
 
 function _loadChunkTransforms(providers, chunk, transforms) {
@@ -164,6 +175,10 @@ function _load(providers, chunks, loader, artifacts) {
 
 function loadTransforms(providers, chunks, transforms) {
     return _load(providers, chunks, _loadChunkTransforms, transforms)
+}
+
+function loadReports(providers, chunks, reports) {
+    return _load(providers, chunks, _loadChunkReports, reports)
 }
 
 function loadFunctions(providers, chunks) {
@@ -230,5 +245,6 @@ module.exports = {
     loadChunkConfig,
     loadFunctions,
     loadChunkConfigs,
-    loadTransforms
+    loadTransforms,
+    loadReports
 }
