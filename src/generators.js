@@ -110,6 +110,7 @@ function _generateProductChunkyManifest(name, template) {
   return {
     name,
     template,
+    env: "dev",
     id: "io.chunky",
     androidSdkDir: "~/Library/Android/sdk",
     sections: {
@@ -393,6 +394,10 @@ function _processTemplateFile(file, options) {
 function _copyTemplateFiles(name, templateDir, targetDir, context) {
   return new Promise((resolve, reject) => {
     recursive(templateDir, config.templatesIgnores, (err, files) => {
+        if (!files || files.length === 0) {
+          reject(new Error("Invalid artifact template"))
+          return
+        }
         files.map((file) => {
           // Process each file in the template and copy it if necessary
           const relativeFile = file.substring(templateDir.length + 1)
@@ -420,7 +425,7 @@ function _generateChunkIndexFile(data) {
   return new Promise((resolve, reject) => {
     const productDir = path.resolve(process.cwd())
     const chunksDir = path.resolve(productDir, 'chunks')
-    const chunks = fs.readdirSync(chunksDir).filter(dir => (dir && dir !== 'index.js' && dir !== '.DS_Store'))
+    const chunks = fs.readdirSync(chunksDir).filter(dir => (dir && dir !== 'index.js' && dir !== 'index.web.js' && dir !== '.DS_Store'))
 
     var chunksExports = chunks.map(chunk => `export { default as ${chunk} } from './${chunk}'`).join("\n")
     var chunksExportsWeb = chunks.map(chunk => `export { default as ${chunk} } from './${chunk}/index.web'`).join("\n")

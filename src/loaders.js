@@ -36,6 +36,27 @@ function _loadChunkArtifactAsXmlToJson(chunk, type, artifact) {
   return _loadXmlAsJsonFile(artifactFile)
 }
 
+function _loadYamlAsJsonFile(file) {
+  if (!fs.existsSync(file)) {
+    throw new Error('Yaml file does not exist')
+  }
+
+  try {
+    return yaml.safeLoad(fs.readFileSync(file, 'utf8'));
+  } catch (e) {
+  }
+  return {}
+}
+
+function _loadChunkArtifactAsYamlToJson(chunk, type, artifact) {
+  const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + ".yaml")
+
+  if (!fs.existsSync(artifactFile)) {
+      return
+  }
+  return _loadYamlAsJsonFile(artifactFile)
+}
+
 function _loadChunkArtifactAsYaml(chunk, type, artifact) {
     const artifactFile = path.resolve(process.cwd(), 'chunks', chunk, type, artifact.name + ".yaml")
 
@@ -113,7 +134,6 @@ function _findChunkArtifacts(chunk, type, artifacts) {
         }).sort((a, b) => (Number.parseInt(a.options.priority) - Number.parseInt(b.options.priority)))
 
     } catch (e) {
-      console.log(e)
         return []
     }
 }
@@ -139,7 +159,20 @@ function _loadChunkTransforms(providers, chunk, transforms) {
           data = data.import
           const type = data.type
           delete data.type
-          var local = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
+          var local = {}
+
+          switch (type) {
+            case "wordpress":
+              local = _loadChunkArtifactAsXmlToJson(chunk, "transforms", transform)
+              break;
+            case "report":
+              local = _loadChunkArtifactAsYamlToJson(chunk, "reports", { name: `${data.report}.report` })
+              delete data.report
+              break;
+            default:
+          }
+
+
           return parsers.parseImportAsTransforms({ type, data, local, providers }).
                 then(d => Object.assign({}, transform, (d ? { data: d } : {})))
         }

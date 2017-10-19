@@ -11,13 +11,13 @@ function parseCommand(command) {
   command.platforms.forEach(platform => {
     switch(platform) {
         case 'ios':
-          ios()
+          ios(command.release)
         break
         case 'android':
-          android()
+          android(command.release)
         break
         case 'web':
-          web(command.webPort)
+          web(command.release, command.webPort)
         break
     }
   })

@@ -8,8 +8,14 @@ module.exports = function(optimize) {
     const file = path.resolve(process.cwd(), 'node_modules', 'react-dom-chunky', 'bin', 'build')
     const build = require(file)
     const config = loaders.loadMainConfig()
-    const secure = loaders.loadSecureConfig()
     const chunks = loaders.loadChunkConfigs()
+
+    var secure
+    try {
+      secure = loaders.loadSecureConfig()
+    } catch (e) {
+      coreutils.logger.skip(`This product is not provisioned. Continuing anyways.`)
+    }
 
     return build({ dir: process.cwd(), config, secure, chunks }).then(() => {
       coreutils.logger.ok(`Your web app is now packaged`)

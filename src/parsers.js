@@ -59,6 +59,43 @@ function _parseWordpressPost(data) {
     meta ? meta : {})
 }
 
+function _parseReportResultNode(item, node) {
+  const type = (typeof node)
+  switch (type) {
+    case "object":
+      var newNode = Array.isArray(node) ? [] : {}
+      for(const key in node) {
+        const nodeValue = _parseReportResultNode(item, node[key])
+        if (!nodeValue || (Array.isArray(node) && newNode.includes(nodeValue))) {
+          continue
+        }
+        newNode[key] = nodeValue
+      }
+      return newNode
+    default:
+      return (node[0] === '$' ? (item[node.substring(1)] || "") : (item[node] || node))
+  }
+}
+
+function _parseReportResult(item, data) {
+  var node = _parseReportResultNode(item, data)
+
+  return Object.assign({}, node)
+}
+
+function _parseReportAsTransforms(data, providers, local) {
+  var report = []
+  local.forEach(item => {
+    var result = _parseReportResult(item, data)
+    if (!result) {
+      return
+    }
+    report.push(result)
+  })
+
+  return Promise.resolve({ report })
+}
+
 function _parseWordpressPostsAsTransforms(data, providers, local) {
   var wordpress = []
   local.rss.channel.item.forEach(item => {
@@ -107,6 +144,8 @@ function _parseGoogleDataAsTransforms(data, google) {
 
 function parseImportAsTransforms({ type, data, providers, local }) {
   switch (type) {
+    case 'report':
+      return _parseReportAsTransforms(data, providers, local)
     case 'wordpress':
       return _parseWordpressPostsAsTransforms(data, providers, local)
     case 'google':

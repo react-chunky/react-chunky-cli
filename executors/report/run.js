@@ -12,8 +12,19 @@ function executeOperations(providers, args) {
 
 function saveReportResult(report, result) {
   const reportDir = path.resolve(process.cwd(), "chunks", report.chunk, "reports")
-  const reportFile = path.resolve(reportDir, report.name + '.xlsx')
+  const excelFile = path.resolve(reportDir, report.name + '.report.xlsx')
+  const yamlFile = path.resolve(reportDir, report.name + '.report.yaml')
 
+  saveReportResultAsExcel(report, result, excelFile)
+  saveReportResultAsYaml(report, result, yamlFile)
+}
+
+function saveReportResultAsYaml(report, result, reportFile) {
+  const content = yaml.safeDump(result)
+  fs.writeFileSync(reportFile, content)
+}
+
+function saveReportResultAsExcel(report, result, reportFile) {
   var data = []
   result.forEach((instance, index, record) => {
 
@@ -47,13 +58,7 @@ function saveReportResult(report, result) {
       item[field] = value
     })
 
-  data.push(item)
-
-  // if (sortField) {
-  //   data.sort(function(a, b) {
-  //     return parseFloat(b[sortField]) - parseFloat(a[sortField])
-  //   })
-  // }
+    data.push(item)
   })
 
   fs.writeFileSync(reportFile, json2xls(data), 'binary')

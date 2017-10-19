@@ -63,9 +63,13 @@ commands:
   more: The supported platforms are ios, android, web
   executor: executors/run
   options:
+  - name: release
+    description: Run the release package
+    default: false
+    type: boolean
   - name: web-port
     description: Use a custom web app port
-    default: 8083
+    default: 8082
     type: string
   examples:
   - command: run
