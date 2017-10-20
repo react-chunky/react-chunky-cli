@@ -142,53 +142,6 @@ function _generateProductChunkyManifest(name, template) {
         privacy: "/",
         terms: "/"
       }
-    },
-    web: {
-      footer: {
-        sections: [{
-          title: "About",
-          id: "about",
-          elements: [{
-            id: "story",
-            title: "Story",
-            link: "/"
-          }, {
-            id: "kit",
-            title: "Press Kit",
-            link: "/"
-          }, {
-            id: "contact",
-            title: "Contact",
-            link: "/"
-          }]
-        },
-         {
-          title: "Social",
-          id: "social",
-          elements: [{
-            id: "facebook",
-            title: "Facebook",
-            link: "/"
-          }, {
-            id: "twitter",
-            title: "Twitter",
-            link: "/"
-          }, {
-            id: "instagram",
-            title: "Instagram",
-            link: "/"
-          }]
-        }],
-        bottom: [{
-          id: "terms",
-          title: "Terms",
-          link: "/"
-        }, {
-          id: "privacy",
-          title: "Privacy",
-          link: "/"
-        }]
-      }
     }
   }
 }
