@@ -1,4 +1,4 @@
-<h3 align="center"> The Chunky   <a href="http://chunky.io/cli"> Command-Line Interface </a>
+<h3 align="center"> The Chunky <a href="http://chunky.io/cli"> CLI </a>
 </h3>
 
 <p align="center">
