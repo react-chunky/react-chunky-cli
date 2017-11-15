@@ -9,7 +9,7 @@
         "removeCache": "cache://delete/account",
         "cleanUp": "local://delete"
       }
-    },
+    }
   },
   "transitions": ["replace://start"]
 }

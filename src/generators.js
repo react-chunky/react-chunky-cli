@@ -115,13 +115,21 @@ function _generateProductChunkyManifest(name, template) {
     androidSdkDir: "~/Library/Android/sdk",
     sections: {
       start: {
-        stack: [ "intro" ],
+        stack: [ "intro", "auth" ],
         hideHeader: true
+      },
+      dashboard: {
+        stack: [ "feed", "account" ]
       }
     },
-    transitions: ["replace://start"],
+    transitions: ["replace://start", "replace://dashboard"],
     provisioning: {},
     theme: {
+      headerColor: "#263238",
+      textColor: "#546E7A",
+      linkColor: "#0288D1",
+      linkHoverColor: "#64B5F6",
+      linkHoverBackgroundColor: "#F5F5F5",
       progressColor: "rgba(50,50,50,0.9)",
       primaryColor: "#43A047",
       statusBarLight: false,

@@ -7,6 +7,4 @@ export default class WelcomeScreen extends auth.screens.welcome {
   renderBanner(slide) {
     return  (<Image style={{alignSelf: 'center', height: 80, width: 80}} source={require('../../../assets/logow.png')}/>)
   }
-
-
 }
