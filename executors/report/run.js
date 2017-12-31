@@ -16,7 +16,7 @@ function saveReportResult(report, result) {
   const yamlFile = path.resolve(reportDir, report.name + '.report.yaml')
 
   saveReportResultAsExcel(report, result, excelFile)
-  saveReportResultAsYaml(report, result, yamlFile)
+  // saveReportResultAsYaml(report, result, yamlFile)
 }
 
 function saveReportResultAsYaml(report, result, reportFile) {

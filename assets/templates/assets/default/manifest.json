@@ -1,5 +1,5 @@
 {
- "name": "<%=chunky.name %>",
+ "name": "Chunky",
  "icons": [
   {
    "src": "\/assets\/favicon\/android-icon-36x36.png",

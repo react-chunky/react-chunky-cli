@@ -1,30 +1,56 @@
 {
+  "layout": {
+    "fixed": true
+  },
   "footer": {
-    "sections": [{
-      "title": "Social",
-      "id": "social",
-      "elements": [{
-        "id": "twitter",
-        "title": "Twitter",
-        "link": "http://twitter.com"
+    "sections": [
+      {
+      "title": "Platform",
+      "id": "platform",
+      "elements": [
+      {
+          "id": "web",
+          "title": "Web",
+          "link": "local://platform/web"
+        },
+        {
+        "id": "mobile",
+        "title": "Mobile",
+        "link": "local://platform/mobile"
       }, {
-        "id": "facebook",
-        "title": "Facebook",
-        "link": "http://facebook.com"
+        "id": "cloud",
+        "title": "Cloud",
+        "link": "local://platform/cloud"
       }, {
-        "id": "medium",
-        "title": "Medium",
-        "link": "http://medium.com"
-      }]
-    }],
-    "bottom": [{
-      "id": "terms",
-      "title": "Terms",
-      "link": "/"
-    }, {
-      "id": "privacy",
-      "title": "Privacy",
-      "link": "/"
-    }]
+        "id": "devops",
+        "title": "DevOps",
+        "link": "local://platform/devops"
+      }]},
+      {
+      "title": "Community",
+      "id": "community",
+      "elements": [
+        {
+          "id": "channel",
+          "title": "Support",
+          "link": "http://t.me/chunkydev"
+        },
+        {
+          "id": "feedback",
+          "title": "Feedback",
+          "link": "http://chunky.canny.io"
+        },
+        {
+          "id": "documentation",
+          "title": "Documentation",
+          "link": "local://docs"
+        },
+        {
+          "id": "source",
+          "title": "Source Code",
+          "link": "http://github.com/react-chunky"
+        }
+      ]}
+    ]
   }
 }
