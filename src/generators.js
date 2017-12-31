@@ -112,7 +112,7 @@ function _generateProductChunkyManifest (name, template) {
     androidSdkDir: '~/Library/Android/sdk',
     sections: {
       start: {
-        stack: [ 'intro', 'docs', 'posts' ]
+        stack: [ 'intro', 'posts', 'docs' ]
       }
     },
     transitions: ['replace://start'],

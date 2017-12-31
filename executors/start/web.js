@@ -3,13 +3,15 @@ const opn = require('opn')
 const path = require('path')
 const loaders = require('../../src/loaders')
 
-module.exports = function(port) {
+module.exports = function (port) {
+  const file = path.resolve(process.cwd(), 'node_modules', 'react-dom-chunky', 'bin', 'start.js')
+  const start = require(file)
+
   coreutils.logger.info(`Starting the web packager on port ${port} ...`)
 
-  const file = path.resolve(process.cwd(), 'node_modules', 'react-dom-chunky', 'bin', 'start')
-  const start = require(file)
   const config = loaders.loadMainConfig()
   const chunks = loaders.loadChunkConfigs()
+
   var secure
   try {
     secure = loaders.loadSecureConfig()
